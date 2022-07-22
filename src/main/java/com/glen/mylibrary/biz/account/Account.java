@@ -27,7 +27,7 @@ public class Account extends BaseEntity {
 
     private LocalDateTime joinedAt;
 
-    private boolean emailVerified;
+    private boolean emailVerified = false;
     private LocalDateTime emailVerifiedAt;
 
     @Enumerated(EnumType.STRING)
