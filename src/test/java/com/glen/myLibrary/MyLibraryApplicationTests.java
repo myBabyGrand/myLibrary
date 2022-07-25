@@ -1,4 +1,4 @@
-package com.glen.mylibrary;
+package com.glen.myLibrary;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

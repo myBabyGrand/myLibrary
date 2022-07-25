@@ -1,6 +1,6 @@
-package com.glen.mylibrary.biz.book;
+package com.glen.myLibrary.biz.book;
 
-import com.glen.mylibrary.biz.common.BaseEntity;
+import com.glen.myLibrary.biz.common.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
-package com.glen.mylibrary.biz.account;
+package com.glen.myLibrary.biz.account;
 
-import com.glen.mylibrary.biz.common.BaseEntity;
+import com.glen.myLibrary.biz.common.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;

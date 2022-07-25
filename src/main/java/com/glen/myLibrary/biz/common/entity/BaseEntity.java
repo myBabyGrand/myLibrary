@@ -1,4 +1,4 @@
-package com.glen.mylibrary.biz.common;
+package com.glen.myLibrary.biz.common.entity;
 
 import lombok.Getter;
 import lombok.Setter;
