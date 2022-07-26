@@ -8,9 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -23,15 +21,24 @@ public class Borrow extends BaseEntity {
     @GeneratedValue
     private Long id;
 
+    @Column(updatable = false)
     private LocalDateTime startAt;
 
     private LocalDateTime expireAt;
 
-    private int extendTimes = 0;
+    private LocalDateTime returnedAt;
+
+    private int extendTimes;
 
     @OneToOne
     private Account account;
 
     @OneToOne
     private Library library;
+
+    @PrePersist
+    public void prePersist(){
+        extendTimes = 0;
+        startAt = LocalDateTime.now();
+    }
 }
