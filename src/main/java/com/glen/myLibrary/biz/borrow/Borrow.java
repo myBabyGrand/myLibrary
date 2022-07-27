@@ -30,6 +30,10 @@ public class Borrow extends BaseEntity {
 
     private int extendTimes;
 
+    private Long bookId;
+
+    private Long userId;
+
     @OneToOne
     private Account account;
 

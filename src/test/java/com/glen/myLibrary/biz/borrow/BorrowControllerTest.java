@@ -3,6 +3,7 @@ package com.glen.myLibrary.biz.borrow;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -20,10 +21,37 @@ class BorrowControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    void test() throws Exception {
+    void getTest() throws Exception {
         mockMvc.perform(get("/getFirstBorrow"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("firstBorrow"))
+                .andDo(print());
+    }
+
+
+    @Test
+    void postTest() throws Exception {
+        mockMvc.perform(post("/postBorrow")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("userId", "1234")
+                        .param("bookId", "5678"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("borrow OK"))
+                .andDo(print());
+
+        mockMvc.perform(post("/postBorrow2")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("userId", "1234")
+                        .param("bookId", "5678"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("borrow OK"))
+                .andDo(print());
+
+        mockMvc.perform(post("/postBorrow3")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"userId\" : \"1234\", \"bookId\" : \"5678\"}"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("borrow_done"))
                 .andDo(print());
     }
 
