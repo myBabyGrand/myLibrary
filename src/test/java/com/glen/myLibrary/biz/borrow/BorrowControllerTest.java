@@ -1,5 +1,6 @@
 package com.glen.myLibrary.biz.borrow;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -51,8 +52,18 @@ class BorrowControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"userId\" : \"1234\", \"bookId\" : \"5678\"}"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("borrow_done"))
+                .andExpect(content().string(""))
                 .andDo(print());
     }
 
+    @Test
+    @DisplayName("필수값 체크")
+    void postError_test() throws Exception {
+        mockMvc.perform(post("/postBorrow3")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"userId\" : \"1234\", \"bookId\" : \"\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.bookId").value("bookId는 null 일 수 없습니다."))
+                .andDo(print());
+    }
 }
