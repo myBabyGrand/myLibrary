@@ -49,4 +49,12 @@ public class BorrowController {
         return Map.of();
     }
 
+    @PostMapping("/postBorrow4")
+    public Map<String, String> borrow4(@Valid @RequestBody BorrowCreateDTO borrowCreateDTO){
+        log.info("borrowCreateDTO : {}", borrowCreateDTO);
+
+
+        return Map.of();
+    }
+
 }

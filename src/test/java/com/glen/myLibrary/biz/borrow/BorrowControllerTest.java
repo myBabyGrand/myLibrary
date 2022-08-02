@@ -66,4 +66,17 @@ class BorrowControllerTest {
                 .andExpect(jsonPath("$.bookId").value("bookId는 null 일 수 없습니다."))
                 .andDo(print());
     }
+    @Test
+    @DisplayName("필수값 체크 using ExceptionHandler")
+    void postError_test_exceptionHandler() throws Exception {
+        mockMvc.perform(post("/postBorrow4")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"userId\" : \"1234\", \"bookId\" : \"\"}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("400"))
+                .andExpect(jsonPath("$.message").value("잘못된 요청입니다"))
+                //TODO : 메시지 용어로 개선 필요
+                .andExpect(jsonPath("$.validation.bookId").value("bookId는 null 일 수 없습니다."))
+                .andDo(print());
+    }
 }
