@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AccountDTO {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
     @Column(unique = true)
@@ -26,23 +24,14 @@ public class AccountDTO {
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
+
+    private String description;
+
     private LocalDateTime joinedAt;
 
     private boolean emailVerified;
     private LocalDateTime emailVerifiedAt;
 
-    @Enumerated(EnumType.STRING)
-    private AccountType accountType;
-
-    @Builder
-    public AccountDTO(Long id, String email, String nickname, String password, LocalDateTime joinedAt, boolean emailVerified, LocalDateTime emailVerifiedAt, AccountType accountType) {
-        this.id = id;
-        this.email = email;
-        this.nickname = nickname;
-        this.password = password;
-        this.joinedAt = joinedAt;
-        this.emailVerified = emailVerified;
-        this.emailVerifiedAt = emailVerifiedAt;
-        this.accountType = accountType;
-    }
 }

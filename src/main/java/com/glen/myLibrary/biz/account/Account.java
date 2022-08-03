@@ -8,12 +8,13 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@ToString
 public class Account extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
@@ -24,11 +25,24 @@ public class Account extends BaseEntity {
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
+
+    @Lob
+    private String description;
+
+
     private LocalDateTime joinedAt;
 
     private boolean emailVerified = false;
     private LocalDateTime emailVerifiedAt;
 
-    @Enumerated(EnumType.STRING)
-    private AccountType accountType;
+    @Builder
+    public Account(String email, String nickname, String password, AccountType accountType, String description) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.accountType = accountType;
+        this.description = description;
+    }
 }
