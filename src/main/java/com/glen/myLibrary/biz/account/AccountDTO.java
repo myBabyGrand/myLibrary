@@ -34,4 +34,15 @@ public class AccountDTO {
     private boolean emailVerified;
     private LocalDateTime emailVerifiedAt;
 
+    @Builder
+    public AccountDTO(String email, String nickname, String password, AccountType accountType, String description, LocalDateTime joinedAt, boolean emailVerified, LocalDateTime emailVerifiedAt) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.accountType = accountType;
+        this.description = description;
+        this.joinedAt = joinedAt;
+        this.emailVerified = emailVerified;
+        this.emailVerifiedAt = emailVerifiedAt;
+    }
 }

@@ -1,5 +1,6 @@
 package com.glen.myLibrary.biz.account;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,6 +25,9 @@ class AccountControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
     private AccountRepository repository;
 
     @BeforeEach
@@ -34,10 +38,24 @@ class AccountControllerTest {
     @Test
     @DisplayName("Account 저장 테스트")
     void save() throws Exception {
+
+        //given
+        AccountDTO accountDTO = AccountDTO.builder()
+                .nickname("닉네임1")
+                .email("abcd@gmail.com")
+                .password("password1")
+                .accountType(AccountType.USER)
+                .description("본인설명")
+                .build();
+
+        String json = objectMapper.writeValueAsString(accountDTO);
+        log.info(json);
+
         //when
         mockMvc.perform(post("/account/save")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"nickName\":\"닉네임1\", \"email\":\"abcd@gmail.com\", \"password\":\"password1\", \"accountType\":\"USER\", \"description\":\"설명1\"}"))
+                .content(json))
+//                .content("{\"nickName\":\"닉네임1\", \"email\":\"abcd@gmail.com\", \"password\":\"password1\", \"accountType\":\"USER\", \"description\":\"설명1\"}"))
                 .andExpect(status().isOk())
                 .andDo(print());
 

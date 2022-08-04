@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -12,7 +14,17 @@ public class AccountService {
     private final AccountRepository accountRepository;
 
     public void save(AccountDTO accountDTO){
-        Account newAccount = new Account(accountDTO.getEmail(),accountDTO.getNickname(), accountDTO.getPassword(), accountDTO.getAccountType(), accountDTO.getDescription());
-        accountRepository.save(newAccount);
+        Account account = Account.builder()
+                .email(accountDTO.getEmail())
+                .nickname(accountDTO.getNickname())
+                .password(accountDTO.getPassword())
+                .accountType(accountDTO.getAccountType())
+                .description(accountDTO.getDescription())
+                .emailVerified(false)
+                .joinedAt(LocalDateTime.now())
+                .build();
+        accountRepository.save(account);
+
+
     }
 }
