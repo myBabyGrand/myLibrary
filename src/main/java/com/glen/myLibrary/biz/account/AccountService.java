@@ -24,7 +24,5 @@ public class AccountService {
                 .joinedAt(LocalDateTime.now())
                 .build();
         accountRepository.save(account);
-
-
     }
 }
