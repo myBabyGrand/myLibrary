@@ -11,9 +11,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.http.MediaType.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -36,7 +41,7 @@ class AccountControllerTest {
     }
 
     @Test
-    @DisplayName("Account 저장 테스트")
+    @DisplayName("AccountController save")
     void save() throws Exception {
 
         //given
@@ -53,7 +58,7 @@ class AccountControllerTest {
 
         //when
         mockMvc.perform(post("/account/save")
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
                 .content(json))
 //                .content("{\"nickName\":\"닉네임1\", \"email\":\"abcd@gmail.com\", \"password\":\"password1\", \"accountType\":\"USER\", \"description\":\"설명1\"}"))
                 .andExpect(status().isOk())
@@ -70,5 +75,31 @@ class AccountControllerTest {
         }
 
     }
+
+    @Test
+    @DisplayName("AccountController get")
+    void getTest() throws Exception {
+        //given
+        Account account = Account.builder()
+                .nickname("test닉네임")
+                .email("testEmail@Email.com")
+                .accountType(AccountType.USER)
+                .password("testPassword")
+                .joinedAt(LocalDateTime.now())
+                .description("test Description")
+                .build();
+        repository.save(account);
+
+        //expected(when & then)
+        mockMvc.perform(get("/account/{accountId}", account.getId())
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(account.getId()))
+                .andExpect(jsonPath("$.nickname").value(account.getNickname()))
+                .andDo(print());
+
+
+    }
+
 
 }

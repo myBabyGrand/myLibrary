@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -24,5 +25,10 @@ public class AccountService {
                 .joinedAt(LocalDateTime.now())
                 .build();
         accountRepository.save(account);
+    }
+
+    public Account get(Long id) {
+        Account account = accountRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
+        return account;
     }
 }
