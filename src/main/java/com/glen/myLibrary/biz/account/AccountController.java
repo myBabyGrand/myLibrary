@@ -19,8 +19,8 @@ public class AccountController {
     }
 
     @GetMapping("/account/{accountId}")
-    public Account get(@PathVariable(name = "accountId") Long id){
-        Account account = accountService.get(id);
-        return account;
+    public AccountResponse get(@PathVariable(name = "accountId") Long id){
+        AccountResponse accountResponse = accountService.get(id);
+        return accountResponse;
     }
 }
