@@ -43,4 +43,16 @@ public class AccountResponse {
         this.emailVerified = emailVerified;
         this.emailVerifiedAt = emailVerifiedAt;
     }
+
+    public AccountResponse(Account account){
+        this.id = account.getId();
+        this.email = account.getEmail();
+        this.nickname = account.getNickname();
+        this.password = account.getPassword();
+        this.accountType = account.getAccountType();
+        this.description = account.getDescription();
+        this.joinedAt = account.getJoinedAt();
+        this.emailVerified = account.isEmailVerified();
+        this.emailVerifiedAt = account.getEmailVerifiedAt();
+    }
 }

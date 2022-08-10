@@ -2,6 +2,8 @@ package com.glen.myLibrary.biz.account;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.MediaType.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -40,7 +43,7 @@ class AccountControllerTest {
     }
 
     @Test
-    @DisplayName("AccountController save")
+    @DisplayName("AccountController.save")
     void save() throws Exception {
 
         //given
@@ -76,7 +79,7 @@ class AccountControllerTest {
     }
 
     @Test
-    @DisplayName("AccountController get")
+    @DisplayName("AccountController.get")
     void getTest() throws Exception {
         //given
         Account account = Account.builder()
@@ -96,9 +99,41 @@ class AccountControllerTest {
                 .andExpect(jsonPath("$.id").value(account.getId()))
                 .andExpect(jsonPath("$.nickname").value(account.getNickname()))
                 .andDo(print());
-
-
     }
 
+    @Test
+    @DisplayName("AccountController.getAccounts")
+    void getAccountsTest() throws Exception {
+        //given
+        Account account1 = Account.builder()
+                .nickname("test닉네임1")
+                .email("testEmail1@Email.com")
+                .accountType(AccountType.USER)
+                .password("testPassword")
+                .joinedAt(LocalDateTime.now())
+                .description("test Description1")
+                .build();
+        repository.save(account1);
+
+        Account account2 = Account.builder()
+                .nickname("test닉네임2")
+                .email("testEmail2@Email.com")
+                .accountType(AccountType.USER)
+                .password("testPassword")
+                .joinedAt(LocalDateTime.now())
+                .description("test Description2")
+                .build();
+        repository.save(account2);
+
+        //expected(when & then)
+        mockMvc.perform(get("/accounts")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.size()").value(2L))
+                .andExpect(jsonPath("$.length()", is(2)))
+                .andExpect(jsonPath("$.[0].nickname").value("test닉네임1"))
+                .andExpect(jsonPath("$.[1].nickname").value("test닉네임2"))
+                .andDo(print());
+    }
 
 }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,4 +24,9 @@ public class AccountController {
         AccountResponse accountResponse = accountService.get(id);
         return accountResponse;
     }
+    @GetMapping("/accounts")
+    public List<AccountResponse> getAccountList(){
+        return accountService.getAccountList();
+    }
+
 }

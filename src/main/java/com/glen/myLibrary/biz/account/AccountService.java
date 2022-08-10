@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -38,5 +40,22 @@ public class AccountService {
                 .emailVerified(account.isEmailVerified())
                 .joinedAt(account.getJoinedAt())
                 .build();
+    }
+
+    public List<AccountResponse> getAccountList() {
+        return accountRepository.findAll().stream().map(
+//                account -> AccountResponse.builder()
+//                        .id(account.getId())
+//                        .email(account.getEmail())
+//                        .nickname(account.getNickname())
+//                        .password(account.getPassword())
+//                        .accountType(account.getAccountType())
+//                        .description(account.getDescription())
+//                        .emailVerified(account.isEmailVerified())
+//                        .joinedAt(account.getJoinedAt())
+//                        .build()
+//                account -> new AccountResponse(account)
+                AccountResponse::new
+        ).collect(Collectors.toList());
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,7 +29,7 @@ class AccountServiceTest {
     }
 
     @Test
-    @DisplayName("AccountService - save")
+    @DisplayName("AccountService.save")
     void saveTest(){
         //given
         AccountDTO accountDTO = AccountDTO.builder()
@@ -52,7 +53,7 @@ class AccountServiceTest {
 
 
     @Test
-    @DisplayName("AccountService - get")
+    @DisplayName("AccountService.get")
     void getTest(){
         //given
         Account account = Account.builder()
@@ -71,6 +72,37 @@ class AccountServiceTest {
         //then
         assertNotNull(accountResponse);
         assertEquals(accountResponse.getNickname(), account.getNickname());
+    }
+
+    @Test
+    @DisplayName("AccountService.getAccountList")
+    void getAccountListTest(){
+        //given
+        Account account1 = Account.builder()
+                .nickname("test닉네임1")
+                .email("testEmail1@Email.com")
+                .accountType(AccountType.USER)
+                .password("testPassword")
+                .joinedAt(LocalDateTime.now())
+                .description("test Description1")
+                .build();
+        repository.save(account1);
+
+        Account account2 = Account.builder()
+                .nickname("test닉네임2")
+                .email("testEmail2@Email.com")
+                .accountType(AccountType.USER)
+                .password("testPassword")
+                .joinedAt(LocalDateTime.now())
+                .description("test Description2")
+                .build();
+        repository.save(account2);
+
+        //when
+        List<AccountResponse> accountList = service.getAccountList();
+
+        //then
+        assertEquals(2L,accountList.size());
     }
 
 }
