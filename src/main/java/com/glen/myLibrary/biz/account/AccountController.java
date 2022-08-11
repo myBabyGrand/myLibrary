@@ -1,6 +1,8 @@
 package com.glen.myLibrary.biz.account;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,8 +27,8 @@ public class AccountController {
         return accountResponse;
     }
     @GetMapping("/accounts")
-    public List<AccountResponse> getAccountList(){
-        return accountService.getAccountList();
+    public List<AccountResponse> getAccountList( Pageable page){
+        return accountService.getAccountList(page);
     }
 
 }

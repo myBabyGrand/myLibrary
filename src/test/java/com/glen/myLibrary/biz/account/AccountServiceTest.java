@@ -6,9 +6,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -78,31 +82,27 @@ class AccountServiceTest {
     @DisplayName("AccountService.getAccountList")
     void getAccountListTest(){
         //given
-        Account account1 = Account.builder()
-                .nickname("test닉네임1")
-                .email("testEmail1@Email.com")
-                .accountType(AccountType.USER)
-                .password("testPassword")
-                .joinedAt(LocalDateTime.now())
-                .description("test Description1")
-                .build();
-        repository.save(account1);
+        List<Account> requestAccounts = IntStream.range(1,31)
+                .mapToObj(i->{
+                    return Account.builder()
+                            .nickname("test닉네임"+i)
+                            .email("testEmail"+i+"@Email.com")
+                            .accountType(AccountType.USER)
+                            .password("testPassword"+i)
+                            .joinedAt(LocalDateTime.now())
+                            .description("test Description"+i)
+                            .build();
+                }).collect(Collectors.toList());
 
-        Account account2 = Account.builder()
-                .nickname("test닉네임2")
-                .email("testEmail2@Email.com")
-                .accountType(AccountType.USER)
-                .password("testPassword")
-                .joinedAt(LocalDateTime.now())
-                .description("test Description2")
-                .build();
-        repository.save(account2);
+        repository.saveAll(requestAccounts);
 
         //when
-        List<AccountResponse> accountList = service.getAccountList();
+        PageRequest pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "id");
+        List<AccountResponse> accountList = service.getAccountList(pageable);
 
         //then
-        assertEquals(2L,accountList.size());
+        assertEquals(10,accountList.size());
+        assertEquals("test닉네임30", accountList.get(0).getNickname());
     }
 
 }

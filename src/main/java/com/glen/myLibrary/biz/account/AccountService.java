@@ -2,6 +2,9 @@ package com.glen.myLibrary.biz.account;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -42,20 +45,10 @@ public class AccountService {
                 .build();
     }
 
-    public List<AccountResponse> getAccountList() {
-        return accountRepository.findAll().stream().map(
-//                account -> AccountResponse.builder()
-//                        .id(account.getId())
-//                        .email(account.getEmail())
-//                        .nickname(account.getNickname())
-//                        .password(account.getPassword())
-//                        .accountType(account.getAccountType())
-//                        .description(account.getDescription())
-//                        .emailVerified(account.isEmailVerified())
-//                        .joinedAt(account.getJoinedAt())
-//                        .build()
-//                account -> new AccountResponse(account)
-                AccountResponse::new
-        ).collect(Collectors.toList());
+    public List<AccountResponse> getAccountList(Pageable pageable) {
+//        Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id"));
+        return accountRepository.findAll(pageable).stream()
+                .map(AccountResponse::new)
+                .collect(Collectors.toList());
     }
 }

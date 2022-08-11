@@ -10,9 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -105,34 +110,28 @@ class AccountControllerTest {
     @DisplayName("AccountController.getAccounts")
     void getAccountsTest() throws Exception {
         //given
-        Account account1 = Account.builder()
-                .nickname("test닉네임1")
-                .email("testEmail1@Email.com")
-                .accountType(AccountType.USER)
-                .password("testPassword")
-                .joinedAt(LocalDateTime.now())
-                .description("test Description1")
-                .build();
-        repository.save(account1);
+        List<Account> requestAccounts = IntStream.range(1,31)
+                .mapToObj(i->{
+                    return Account.builder()
+                            .nickname("test닉네임"+i)
+                            .email("testEmail"+i+"@Email.com")
+                            .accountType(AccountType.USER)
+                            .password("testPassword"+i)
+                            .joinedAt(LocalDateTime.now())
+                            .description("test Description"+i)
+                            .build();
+                }).collect(Collectors.toList());
 
-        Account account2 = Account.builder()
-                .nickname("test닉네임2")
-                .email("testEmail2@Email.com")
-                .accountType(AccountType.USER)
-                .password("testPassword")
-                .joinedAt(LocalDateTime.now())
-                .description("test Description2")
-                .build();
-        repository.save(account2);
+        repository.saveAll(requestAccounts);
 
         //expected(when & then)
-        mockMvc.perform(get("/accounts")
+        mockMvc.perform(get("/accounts?page=1&sort=id,desc&size=5")
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
 //                .andExpect(jsonPath("$.size()").value(2L))
-                .andExpect(jsonPath("$.length()", is(2)))
-                .andExpect(jsonPath("$.[0].nickname").value("test닉네임1"))
-                .andExpect(jsonPath("$.[1].nickname").value("test닉네임2"))
+                .andExpect(jsonPath("$.length()", is(5)))
+                .andExpect(jsonPath("$.[0].nickname").value("test닉네임30"))
+                .andExpect(jsonPath("$.[1].nickname").value("test닉네임29"))
                 .andDo(print());
     }
 
