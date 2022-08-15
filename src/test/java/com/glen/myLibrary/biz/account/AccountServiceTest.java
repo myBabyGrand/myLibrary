@@ -97,8 +97,13 @@ class AccountServiceTest {
         repository.saveAll(requestAccounts);
 
         //when
-        PageRequest pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "id");
-        List<AccountResponse> accountList = service.getAccountList(pageable);
+//        PageRequest pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "id");
+        AccountSearch accountSearch = AccountSearch.builder()
+                .page(1)
+                .size(10)
+                .build();
+
+        List<AccountResponse> accountList = service.getAccountList(accountSearch);
 
         //then
         assertEquals(10,accountList.size());

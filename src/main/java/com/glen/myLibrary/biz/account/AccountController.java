@@ -27,8 +27,8 @@ public class AccountController {
         return accountResponse;
     }
     @GetMapping("/accounts")
-    public List<AccountResponse> getAccountList( Pageable page){
-        return accountService.getAccountList(page);
+    public List<AccountResponse> getAccountList(@ModelAttribute AccountSearch accountSearch){
+        return accountService.getAccountList(accountSearch);
     }
 
 }

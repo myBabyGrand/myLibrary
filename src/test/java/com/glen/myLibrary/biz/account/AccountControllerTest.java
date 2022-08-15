@@ -135,4 +135,33 @@ class AccountControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    @DisplayName("AccountController.getAccounts : in case of page is 0")
+    void getAccountsTes_page0() throws Exception {
+        //given
+        List<Account> requestAccounts = IntStream.range(1,31)
+                .mapToObj(i->{
+                    return Account.builder()
+                            .nickname("test닉네임"+i)
+                            .email("testEmail"+i+"@Email.com")
+                            .accountType(AccountType.USER)
+                            .password("testPassword"+i)
+                            .joinedAt(LocalDateTime.now())
+                            .description("test Description"+i)
+                            .build();
+                }).collect(Collectors.toList());
+
+        repository.saveAll(requestAccounts);
+
+        //expected(when & then)
+        mockMvc.perform(get("/accounts?page=0&size=5")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.size()").value(2L))
+                .andExpect(jsonPath("$.length()", is(5)))
+                .andExpect(jsonPath("$.[0].nickname").value("test닉네임30"))
+                .andExpect(jsonPath("$.[1].nickname").value("test닉네임29"))
+                .andDo(print());
+    }
+
 }

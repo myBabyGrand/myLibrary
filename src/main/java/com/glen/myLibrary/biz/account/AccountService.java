@@ -45,9 +45,12 @@ public class AccountService {
                 .build();
     }
 
-    public List<AccountResponse> getAccountList(Pageable pageable) {
+    public List<AccountResponse> getAccountList(AccountSearch accountSearch) {
 //        Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id"));
-        return accountRepository.findAll(pageable).stream()
+//        return accountRepository.findAll(pageable).stream()
+//                .map(AccountResponse::new)
+//                .collect(Collectors.toList());
+        return accountRepository.getPageList(accountSearch).stream()
                 .map(AccountResponse::new)
                 .collect(Collectors.toList());
     }
