@@ -1,8 +1,6 @@
 package com.glen.myLibrary.biz.account;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,6 +27,11 @@ public class AccountController {
     @GetMapping("/accounts")
     public List<AccountResponse> getAccountList(@ModelAttribute AccountSearch accountSearch){
         return accountService.getAccountList(accountSearch);
+    }
+
+    @PatchMapping("/account/{accountId}")
+    public void updateAccount(@PathVariable Long accountId, @RequestBody @Valid AccountUpdateDTO request){
+        accountService.updateAccount(accountId, request);
     }
 
 }

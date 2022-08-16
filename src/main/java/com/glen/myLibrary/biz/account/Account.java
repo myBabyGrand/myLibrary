@@ -50,4 +50,15 @@ public class Account extends BaseEntity {
         this.emailVerified = emailVerified;
         this.emailVerifiedAt = emailVerifiedAt;
     }
+
+    //TODO : mapstruct 적용하기
+    public void from(AccountUpdateDTO dto){
+        this.email = dto.getEmail() != null ? dto.getEmail() : this.email;
+        this.nickname = dto.getNickname() != null ? dto.getNickname() : this.nickname;
+        this.password = dto.getPassword() != null ? dto.getPassword() : this.password;
+        this.accountType = dto.getAccountType() != null ? dto.getAccountType() : this.accountType;
+        this.description = dto.getDescription() != null ? dto.getDescription() : this.description;
+        this.emailVerified = dto.isEmailVerified() != this.emailVerified ? dto.isEmailVerified() : this.emailVerified;
+        this.emailVerifiedAt = dto.getEmailVerifiedAt() != null ?  dto.getEmailVerifiedAt() : this.emailVerifiedAt;
+    }
 }

@@ -2,16 +2,12 @@ package com.glen.myLibrary.biz.account;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -22,8 +18,7 @@ import java.util.stream.IntStream;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.MediaType.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -161,6 +156,42 @@ class AccountControllerTest {
                 .andExpect(jsonPath("$.length()", is(5)))
                 .andExpect(jsonPath("$.[0].nickname").value("test닉네임30"))
                 .andExpect(jsonPath("$.[1].nickname").value("test닉네임29"))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("AccountController.updateAccount")
+    void updateAccountTest() throws Exception {
+        //given
+        Account account = Account.builder()
+                .nickname("test닉네임")
+                .email("testEmail@Email.com")
+                .accountType(AccountType.USER)
+                .password("testPassword")
+                .joinedAt(LocalDateTime.now())
+                .description("test Description")
+                .build();
+
+        repository.save(account);
+
+
+        //누락된 항목 : accountType, email, emailVerified
+        AccountUpdateDTO accountUpdateDTO = AccountUpdateDTO.builder()
+                .nickname("0"+account.getNickname())
+                .email("0"+account.getEmail())
+                .password("0"+account.getPassword())
+                .description("0"+account.getDescription())
+                .emailVerifiedAt(LocalDateTime.MAX)
+                .build();
+
+        String json = objectMapper.writeValueAsString(accountUpdateDTO);
+        log.info(json);
+
+        //expected(when & then)
+        mockMvc.perform(patch("/account/{accountId}", account.getId() )
+                        .contentType(APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 

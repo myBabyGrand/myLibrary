@@ -2,11 +2,9 @@ package com.glen.myLibrary.biz.account;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,5 +51,12 @@ public class AccountService {
         return accountRepository.getPageList(accountSearch).stream()
                 .map(AccountResponse::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void updateAccount(long id, AccountUpdateDTO updateRequest){
+        Account account = accountRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("존재하지 않는 데이터입니다."));
+        account.from(updateRequest);
+        accountRepository.save(account);
     }
 }

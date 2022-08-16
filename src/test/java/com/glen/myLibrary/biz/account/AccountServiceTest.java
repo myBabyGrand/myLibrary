@@ -6,8 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -110,4 +108,76 @@ class AccountServiceTest {
         assertEquals("test닉네임30", accountList.get(0).getNickname());
     }
 
+    @Test
+    @DisplayName("AccountService.updateAccount")
+    void updateAccountTest(){
+        //given
+        Account account = Account.builder()
+                .nickname("test닉네임")
+                .email("testEmail@Email.com")
+                .accountType(AccountType.USER)
+                .password("testPassword")
+                .joinedAt(LocalDateTime.now())
+                .description("test Description")
+                .build();
+
+        repository.save(account);
+
+        AccountUpdateDTO accountUpdateDTO = AccountUpdateDTO.builder()
+                .nickname("0"+account.getNickname())
+                .email("0"+account.getEmail())
+                .accountType(AccountType.LIBRARIAN)
+                .password("0"+account.getPassword())
+                .description("0"+account.getDescription())
+                .emailVerified(account.isEmailVerified())
+                .emailVerifiedAt(LocalDateTime.MAX)
+                .build();
+
+
+        //when
+        service.updateAccount(account.getId(), accountUpdateDTO);
+
+        //then
+        Account findAccount = repository.findById(account.getId()).orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. id = " + account.getId()));
+        assertEquals(findAccount.getNickname(), accountUpdateDTO.getNickname());
+        assertEquals(findAccount.getAccountType(), accountUpdateDTO.getAccountType());
+    }
+
+    @Test
+    @DisplayName("AccountService.updateAccount : null인 업데이터 항목이 있는 경우")
+    void updateAccountTest_nullCase(){
+        //given
+        Account account = Account.builder()
+                .nickname("test닉네임")
+                .email("testEmail@Email.com")
+                .accountType(AccountType.USER)
+                .password("testPassword")
+                .joinedAt(LocalDateTime.now())
+                .description("test Description")
+                .build();
+
+        repository.save(account);
+
+        //누락된 항목 : accountType,  emailVerified
+        AccountUpdateDTO accountUpdateDTO = AccountUpdateDTO.builder()
+                .nickname("0"+account.getNickname())
+                .email("0"+account.getEmail())
+                .password("0"+account.getPassword())
+                .description("0"+account.getDescription())
+                .emailVerifiedAt(LocalDateTime.MAX)
+                .build();
+
+
+        //when
+        service.updateAccount(account.getId(), accountUpdateDTO);
+
+        //then
+        Account findAccount = repository.findById(account.getId()).orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. id = " + account.getId()));
+        //수정된 항목
+        assertEquals(findAccount.getNickname(), accountUpdateDTO.getNickname());
+
+        //수정되지 않은 항목
+        assertEquals(findAccount.getAccountType(), account.getAccountType());
+        assertEquals(findAccount.isEmailVerified(), account.isEmailVerified());
+    }
 }
