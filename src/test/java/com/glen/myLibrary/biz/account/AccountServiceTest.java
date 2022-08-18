@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -30,6 +31,16 @@ class AccountServiceTest {
         repository.deleteAll();
     }
 
+    private static Account createTestAccount() {
+        return Account.builder()
+                .nickname("test닉네임")
+                .email("testEmail@Email.com")
+                .accountType(AccountType.USER)
+                .password("testPassword")
+                .joinedAt(LocalDateTime.now())
+                .description("test Description")
+                .build();
+    }
     @Test
     @DisplayName("AccountService.save")
     void saveTest(){
@@ -58,14 +69,7 @@ class AccountServiceTest {
     @DisplayName("AccountService.get")
     void getTest(){
         //given
-        Account account = Account.builder()
-                .nickname("test닉네임")
-                .email("testEmail@Email.com")
-                .accountType(AccountType.USER)
-                .password("testPassword")
-                .joinedAt(LocalDateTime.now())
-                .description("test Description")
-                .build();
+        Account account = createTestAccount();
         repository.save(account);
 
         //when
@@ -112,14 +116,7 @@ class AccountServiceTest {
     @DisplayName("AccountService.updateAccount")
     void updateAccountTest(){
         //given
-        Account account = Account.builder()
-                .nickname("test닉네임")
-                .email("testEmail@Email.com")
-                .accountType(AccountType.USER)
-                .password("testPassword")
-                .joinedAt(LocalDateTime.now())
-                .description("test Description")
-                .build();
+        Account account = createTestAccount();
 
         repository.save(account);
 
@@ -147,14 +144,7 @@ class AccountServiceTest {
     @DisplayName("AccountService.updateAccount : null인 업데이터 항목이 있는 경우")
     void updateAccountTest_nullCase(){
         //given
-        Account account = Account.builder()
-                .nickname("test닉네임")
-                .email("testEmail@Email.com")
-                .accountType(AccountType.USER)
-                .password("testPassword")
-                .joinedAt(LocalDateTime.now())
-                .description("test Description")
-                .build();
+        Account account = createTestAccount();
 
         repository.save(account);
 
@@ -179,5 +169,23 @@ class AccountServiceTest {
         //수정되지 않은 항목
         assertEquals(findAccount.getAccountType(), account.getAccountType());
         assertEquals(findAccount.isEmailVerified(), account.isEmailVerified());
+    }
+
+
+
+    @Test
+    @DisplayName("AccountService.deleteAccount")
+    void deleteAccountTest(){
+        //given
+        Account account = createTestAccount();
+        repository.save(account);
+
+        //when
+        service.deleteAccount(account.getId());
+
+        //then
+        Optional<Account> findById = repository.findById(account.getId());
+
+        assertTrue(findById.isEmpty());
     }
 }

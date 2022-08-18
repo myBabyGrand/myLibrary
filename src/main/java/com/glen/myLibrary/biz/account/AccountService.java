@@ -59,4 +59,9 @@ public class AccountService {
         account.from(updateRequest);
         accountRepository.save(account);
     }
+
+    public void deleteAccount(Long id) {
+        Account account = accountRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("존재하지 않는 데이터입니다."));
+        accountRepository.delete(account);
+    }
 }

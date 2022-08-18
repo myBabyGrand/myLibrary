@@ -42,6 +42,16 @@ class AccountControllerTest {
         repository.deleteAll();
     }
 
+    private static Account createTestAccount() {
+        return Account.builder()
+                .nickname("test닉네임")
+                .email("testEmail@Email.com")
+                .accountType(AccountType.USER)
+                .password("testPassword")
+                .joinedAt(LocalDateTime.now())
+                .description("test Description")
+                .build();
+    }
     @Test
     @DisplayName("AccountController.save")
     void save() throws Exception {
@@ -82,14 +92,7 @@ class AccountControllerTest {
     @DisplayName("AccountController.get")
     void getTest() throws Exception {
         //given
-        Account account = Account.builder()
-                .nickname("test닉네임")
-                .email("testEmail@Email.com")
-                .accountType(AccountType.USER)
-                .password("testPassword")
-                .joinedAt(LocalDateTime.now())
-                .description("test Description")
-                .build();
+        Account account = createTestAccount();
         repository.save(account);
 
         //expected(when & then)
@@ -163,14 +166,7 @@ class AccountControllerTest {
     @DisplayName("AccountController.updateAccount")
     void updateAccountTest() throws Exception {
         //given
-        Account account = Account.builder()
-                .nickname("test닉네임")
-                .email("testEmail@Email.com")
-                .accountType(AccountType.USER)
-                .password("testPassword")
-                .joinedAt(LocalDateTime.now())
-                .description("test Description")
-                .build();
+        Account account = createTestAccount();
 
         repository.save(account);
 
@@ -191,6 +187,20 @@ class AccountControllerTest {
         mockMvc.perform(patch("/account/{accountId}", account.getId() )
                         .contentType(APPLICATION_JSON)
                         .content(json))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("AccountController.updateAccount")
+    void deleteAccountTest() throws Exception {
+        //given
+        Account account = createTestAccount();
+        repository.save(account);
+
+        //expected(when & then)
+        mockMvc.perform(delete("/account/{accountId}", account.getId() )
+                        .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
