@@ -1,6 +1,7 @@
 package com.glen.myLibrary.biz.borrow;
 
 import com.glen.myLibrary.biz.account.Account;
+import com.glen.myLibrary.biz.book.Book;
 import com.glen.myLibrary.biz.common.entity.BaseEntity;
 import com.glen.myLibrary.biz.library.Library;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,9 @@ public class Borrow extends BaseEntity {
     private Long bookId;
 
     private Long userId;
+
+    @OneToOne
+    private Book book;
 
     @OneToOne
     private Account account;

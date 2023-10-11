@@ -1,5 +1,6 @@
-package com.glen.myLibrary.biz.account;
+package com.glen.myLibrary.biz.account.dto;
 
+import com.glen.myLibrary.biz.account.AccountType;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
