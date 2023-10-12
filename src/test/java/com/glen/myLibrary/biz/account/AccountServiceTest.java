@@ -125,7 +125,7 @@ class AccountServiceTest {
         AccountUpdateDTO accountUpdateDTO = AccountUpdateDTO.builder()
                 .nickname("0"+account.getNickname())
                 .email("0"+account.getEmail())
-                .accountType(AccountType.LIBRARIAN)
+                .accountType(AccountType.LIBRARY_ADMIN)
                 .password("0"+account.getPassword())
                 .description("0"+account.getDescription())
                 .emailVerified(account.isEmailVerified())

@@ -7,6 +7,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 
 public class LibraryMember extends BaseEntity {
@@ -21,6 +22,8 @@ public class LibraryMember extends BaseEntity {
     private LibraryMemberType libraryMemberType;
 
     private Account account;
+
+    private LocalDateTime joinedAt;
 
 
 }

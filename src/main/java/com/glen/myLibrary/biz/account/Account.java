@@ -53,13 +53,14 @@ public class Account extends BaseEntity {
     }
 
     //TODO : mapstruct 적용하기
-    public void from(AccountUpdateDTO dto){
-        this.email = dto.getEmail() != null ? dto.getEmail() : this.email;
-        this.nickname = dto.getNickname() != null ? dto.getNickname() : this.nickname;
-        this.password = dto.getPassword() != null ? dto.getPassword() : this.password;
-        this.accountType = dto.getAccountType() != null ? dto.getAccountType() : this.accountType;
-        this.description = dto.getDescription() != null ? dto.getDescription() : this.description;
-        this.emailVerified = dto.isEmailVerified() != this.emailVerified ? dto.isEmailVerified() : this.emailVerified;
-        this.emailVerifiedAt = dto.getEmailVerifiedAt() != null ?  dto.getEmailVerifiedAt() : this.emailVerifiedAt;
+    public void from(AccountUpdateDTO updateDTO){
+        this.email = updateDTO.getEmail() != null ? updateDTO.getEmail() : this.email;
+        this.nickname = updateDTO.getNickname() != null ? updateDTO.getNickname() : this.nickname;
+        this.password = updateDTO.getPassword() != null ? updateDTO.getPassword() : this.password;
+        this.accountType = updateDTO.getAccountType() != null ? updateDTO.getAccountType() : this.accountType;
+        this.description = updateDTO.getDescription() != null ? updateDTO.getDescription() : this.description;
+//        this.description = dto.getDescription();
+        this.emailVerified = updateDTO.isEmailVerified() != this.emailVerified ? updateDTO.isEmailVerified() : this.emailVerified;
+        this.emailVerifiedAt = updateDTO.getEmailVerifiedAt() != null ?  updateDTO.getEmailVerifiedAt() : this.emailVerifiedAt;
     }
 }

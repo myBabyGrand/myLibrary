@@ -14,6 +14,17 @@ import java.util.Map;
 @RestController
 public class BorrowController {
 
+    //나의 대출 내역 조회 - 세션에서 가져와야함, 빌린날짜 기준 Desc
+
+    //도서관의 대출 내역 조회 - 세션에서 도서관 정보를 가져와서 조회, 날짜 정보 필수
+
+    //대출정보 생성
+
+    //대출정보 수정 - 반납
+
+    //대출정보 수정 - 연장
+
+
     @GetMapping("/getFirstBorrow")
     public String getFirstBorrow(){
         return "firstBorrow";
