@@ -6,6 +6,7 @@ import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @ToString
 @Setter
@@ -17,4 +18,9 @@ public class BorrowCreateDTO {
 
     @NotNull(message = "userId는 null 일 수 없습니다.")
     private Long userId;
+
+    @NotNull(message = "libraryId는 null 일 수 없습니다.")
+    private Long libraryId;
+
+    private LocalDateTime expiredAt;
 }

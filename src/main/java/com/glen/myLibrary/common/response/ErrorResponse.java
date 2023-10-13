@@ -1,4 +1,4 @@
-package com.glen.myLibrary.biz.common.response;
+package com.glen.myLibrary.common.response;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,19 +1,17 @@
 package com.glen.myLibrary.biz.book;
 
-import com.glen.myLibrary.biz.common.entity.BaseEntity;
+import com.glen.myLibrary.common.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 public class Book extends BaseEntity {

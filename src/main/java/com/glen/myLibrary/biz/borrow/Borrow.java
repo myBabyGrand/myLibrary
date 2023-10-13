@@ -2,12 +2,11 @@ package com.glen.myLibrary.biz.borrow;
 
 import com.glen.myLibrary.biz.account.Account;
 import com.glen.myLibrary.biz.book.Book;
-import com.glen.myLibrary.biz.common.entity.BaseEntity;
+import com.glen.myLibrary.biz.library.LibraryBook;
+import com.glen.myLibrary.biz.library.LibraryMember;
+import com.glen.myLibrary.common.entity.BaseEntity;
 import com.glen.myLibrary.biz.library.Library;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -36,10 +35,10 @@ public class Borrow extends BaseEntity {
     private Long userId;
 
     @OneToOne
-    private Book book;
+    private LibraryBook libraryBook;
 
     @OneToOne
-    private Account account;
+    private LibraryMember borrower;
 
     @OneToOne
     private Library library;
@@ -48,5 +47,19 @@ public class Borrow extends BaseEntity {
     public void prePersist(){
         extendTimes = 0;
         startAt = LocalDateTime.now();
+    }
+
+    @Builder
+    public Borrow(LocalDateTime startAt, LocalDateTime expireAt, LocalDateTime returnedAt, int extendTimes, Long bookId, Long userId, LibraryBook libraryBook, LibraryMember borrower, Library library) {
+
+        this.startAt = startAt;
+        this.expireAt = expireAt;
+        this.returnedAt = returnedAt;
+        this.extendTimes = extendTimes;
+        this.bookId = bookId;
+        this.userId = userId;
+        this.libraryBook = libraryBook;
+        this.borrower = borrower;
+        this.library = library;
     }
 }

@@ -1,7 +1,7 @@
 package com.glen.myLibrary.biz.account;
 
 import com.glen.myLibrary.biz.account.dto.AccountUpdateDTO;
-import com.glen.myLibrary.biz.common.entity.BaseEntity;
+import com.glen.myLibrary.common.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -59,7 +59,6 @@ public class Account extends BaseEntity {
         this.password = updateDTO.getPassword() != null ? updateDTO.getPassword() : this.password;
         this.accountType = updateDTO.getAccountType() != null ? updateDTO.getAccountType() : this.accountType;
         this.description = updateDTO.getDescription() != null ? updateDTO.getDescription() : this.description;
-//        this.description = dto.getDescription();
         this.emailVerified = updateDTO.isEmailVerified() != this.emailVerified ? updateDTO.isEmailVerified() : this.emailVerified;
         this.emailVerifiedAt = updateDTO.getEmailVerifiedAt() != null ?  updateDTO.getEmailVerifiedAt() : this.emailVerifiedAt;
     }

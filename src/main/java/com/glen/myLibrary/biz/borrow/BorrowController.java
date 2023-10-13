@@ -1,26 +1,56 @@
 package com.glen.myLibrary.biz.borrow;
 
+import com.glen.myLibrary.common.entity.SaveResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class BorrowController {
 
+    private final BorrowService borrowService;
+
     //나의 대출 내역 조회 - 세션에서 가져와야함, 빌린날짜 기준 Desc
+    @GetMapping("/my-borrow")
+    public List<BorrowResponse> getMyBorrow (@ModelAttribute BorrowPageSearch borrowPageSearch){
+        //TODO : 본인건인지 확인
+
+        return borrowService.getBorrows(borrowPageSearch);
+    }
+
 
     //도서관의 대출 내역 조회 - 세션에서 도서관 정보를 가져와서 조회, 날짜 정보 필수
+    @GetMapping("/my-library-borrow")
+    public List<BorrowResponse> getMyLibraryBorrow (@ModelAttribute BorrowPageSearch borrowPageSearch){
+        //TODO : library건인지 확인
 
-    //대출정보 생성
+        return borrowService.getBorrows(borrowPageSearch);
+    }
+
+    //대출정보 단건 생성
+    @PostMapping("/borrow")
+    public SaveResponse createBorrows(@Valid @RequestBody BorrowCreateDTO borrowCreateDTO){
+        return borrowService.createBorrow(borrowCreateDTO);
+    }
+
 
     //대출정보 수정 - 반납
+    @PatchMapping("/return/{borrowId}")
+    public SaveResponse returnBorrow(@PathVariable(name = "borrowId") Long id){
+        //TODO : 본인건인지 확인
+        return borrowService.returnBorrow(id);
+    }
+
 
     //대출정보 수정 - 연장
 

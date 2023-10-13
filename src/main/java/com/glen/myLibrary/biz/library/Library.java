@@ -1,19 +1,17 @@
 package com.glen.myLibrary.biz.library;
 
-import com.glen.myLibrary.biz.common.entity.Address;
-import com.glen.myLibrary.biz.common.entity.BaseEntity;
+import com.glen.myLibrary.common.entity.Address;
+import com.glen.myLibrary.common.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Entity
 @NoArgsConstructor
 public class Library extends BaseEntity {
 
@@ -30,6 +28,7 @@ public class Library extends BaseEntity {
 
     private String description;
 
+    @OneToOne
     private Address address;
 
     private LocalDateTime approvedAt;

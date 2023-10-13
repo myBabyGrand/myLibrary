@@ -1,4 +1,4 @@
-package com.glen.myLibrary.biz.common.entity;
+package com.glen.myLibrary.common.entity;
 
 import com.glen.myLibrary.biz.account.AccountType;
 import com.glen.myLibrary.biz.library.Library;
