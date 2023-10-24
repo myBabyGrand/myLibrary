@@ -76,4 +76,25 @@ public class BorrowService {
     }
 
 
+    public SaveResponse extendBorrow(Long id) {
+
+        Optional<Borrow> borrow = borrowRepository.findById(id);
+        if(!borrow.isPresent()){
+            throw new IllegalArgumentException("존재하지 않는 대여건입니다. "+id);
+        }
+
+        List<Reservation> reservations = reservationService.getReservations(borrow.get().getLibraryBook().getId());;
+        if(!CollectionUtils.isEmpty(reservations)){
+
+        }
+
+        //TODO : 도서관의 연장일수 정책 가져오기
+        //TODO : 연장횟수 초과여부
+        //TODO : 연장일자 계산 default 일주일(7)
+
+        borrow.get().extendBorrow(7);
+        Borrow extendedBorrow = borrowRepository.save(borrow.get());
+
+        return new SaveResponse(1, extendedBorrow.getId());
+    }
 }

@@ -15,6 +15,7 @@ public class ReservationService {
 
     public List<Reservation> getReservations(Long libraryBookId) {
 //        return reservationRepository.findByLibraryBookAndReservationStatusOrderByRequestedAtDesc();
+        //TODO : 구현
         return null;
     }
 }

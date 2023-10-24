@@ -43,6 +43,11 @@ public class Borrow extends BaseEntity {
     @OneToOne
     private Library library;
 
+    public void extendBorrow(long days){
+        this.setExtendTimes(this.getExtendTimes()+1);
+        this.setExpireAt(this.getExpireAt().plusDays(days));
+    }
+
     @PrePersist
     public void prePersist(){
         extendTimes = 0;

@@ -53,6 +53,13 @@ public class BorrowController {
 
 
     //대출정보 수정 - 연장
+    @PatchMapping("/extend/{borrowId}")
+    public SaveResponse extendBorrow(@PathVariable(name = "borrowId") Long id){
+        //TODO : 본인건인지 확인
+        return borrowService.extendBorrow(id);
+    }
+
+
 
 
     @GetMapping("/getFirstBorrow")
