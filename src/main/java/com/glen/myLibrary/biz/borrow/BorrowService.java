@@ -1,6 +1,8 @@
 package com.glen.myLibrary.biz.borrow;
 
-import com.glen.myLibrary.biz.library.LibraryBookService;
+import com.glen.myLibrary.biz.account.AccountStatus;
+import com.glen.myLibrary.biz.library.*;
+import com.glen.myLibrary.biz.library.dto.LibraryMemberDTO;
 import com.glen.myLibrary.biz.reservation.Reservation;
 import com.glen.myLibrary.biz.reservation.ReservationService;
 import com.glen.myLibrary.common.DateTimeUtil;
@@ -20,9 +22,13 @@ public class BorrowService {
 
     private final BorrowRepository borrowRepository;
 
+    private final LibraryService libraryService;
     private final LibraryBookService libraryBookService;
 
+    private final LibraryMemberService libraryMemberService;
+
     private final ReservationService reservationService;
+
 
     public List<BorrowResponse> getBorrows(BorrowPageSearch borrowPageSearch) {
         //TODO : 구현필요
@@ -31,8 +37,25 @@ public class BorrowService {
 
     public SaveResponse createBorrow(BorrowCreateDTO borrowCreateDTO) {
         //TODO : 이용자 상태 (APPROVED)
-        //TODO : 책 상태 (BORROWABLE 이거나, 본인의 RESERVED + reservationDueDay 이내)
+        LibraryMemberDTO libraryMemberDTO = libraryMemberService.getLibraryMember(borrowCreateDTO.getLibraryMemberId());
+        if(AccountStatus.APPROVED != libraryMemberDTO.getAccount().getAccountStatus()){
+
+        }
+        if(LibraryMemberStatus.APPROVED != libraryMemberDTO.getLibraryMemberStatus()){
+
+        }
+
+        //TODO : 책 상태 (BORROWABLE 이거나, 본인의 RESERVATION)
+        if(!libraryBookService.isBorrowAble(borrowCreateDTO.getLibraryBookId(), borrowCreateDTO.getLibraryMemberId())){
+
+        }
+
         //TODO : 도서관 상태 (OPERATING)
+        if(LibraryStatus.OPERATING != libraryService.getLibrary(borrowCreateDTO.getLibraryId()).getLibraryStatus()){
+
+        }
+
+
         int lentDays = 10;//TODO 정책에서 가져오기, 휴관일 고려.
 
         Borrow borrow = Borrow
@@ -44,6 +67,7 @@ public class BorrowService {
         Borrow saveBorrow = borrowRepository.save(borrow);
 
         //TODO : 예약정보 갱신
+
 
         return new SaveResponse(1, saveBorrow.getId());
     }

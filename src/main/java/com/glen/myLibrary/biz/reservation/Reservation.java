@@ -5,11 +5,13 @@ import com.glen.myLibrary.biz.library.LibraryBook;
 import com.glen.myLibrary.biz.library.LibraryBookStatus;
 import com.glen.myLibrary.biz.library.LibraryMember;
 import com.glen.myLibrary.common.entity.BaseEntity;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Data
 public class Reservation extends BaseEntity {
     @Id
     @GeneratedValue

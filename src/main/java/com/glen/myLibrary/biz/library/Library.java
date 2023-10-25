@@ -2,6 +2,7 @@ package com.glen.myLibrary.biz.library;
 
 import com.glen.myLibrary.common.entity.Address;
 import com.glen.myLibrary.common.entity.BaseEntity;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,8 +10,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @Entity
 @NoArgsConstructor
 public class Library extends BaseEntity {
@@ -32,5 +32,8 @@ public class Library extends BaseEntity {
     private Address address;
 
     private LocalDateTime approvedAt;
+
+    @OneToOne
+    private LibraryPolicy libraryPolicy;
 
 }

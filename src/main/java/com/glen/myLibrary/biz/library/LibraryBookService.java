@@ -1,8 +1,11 @@
 package com.glen.myLibrary.biz.library;
 
+import com.glen.myLibrary.biz.reservation.Reservation;
 import com.glen.myLibrary.biz.reservation.ReservationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.CollectionUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -10,6 +13,8 @@ public class LibraryBookService {
 
 
     private final LibraryBookRepository libraryBookRepository;
+
+    private final ReservationService reservationService;
 
     public LibraryBook getLibraryBook(Long libraryBookId){
         Optional<LibraryBook> libraryBook = libraryBookRepository.findById(libraryBookId);
@@ -29,4 +34,16 @@ public class LibraryBookService {
         libraryBookRepository.save(libraryBook);
     }
 
+    public boolean isBorrowAble(Long libraryBookId, Long libraryMemberId){
+        LibraryBook libraryBook = this.getLibraryBook(libraryBookId);
+        if(LibraryBookStatus.BORROWABLE == libraryBook.getLibraryBookStatus()){
+            return true;
+        }
+
+        if(LibraryBookStatus.RESERVED == libraryBook.getLibraryBookStatus()){
+            return reservationService.isMyTurn(libraryBookId, libraryMemberId);
+        }
+
+        return false;
+    }
 }

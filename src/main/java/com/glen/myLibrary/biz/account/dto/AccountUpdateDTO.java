@@ -1,5 +1,6 @@
 package com.glen.myLibrary.biz.account.dto;
 
+import com.glen.myLibrary.biz.account.AccountStatus;
 import com.glen.myLibrary.biz.account.AccountType;
 import lombok.*;
 
@@ -31,13 +32,16 @@ public class AccountUpdateDTO {
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
+    @Enumerated(EnumType.STRING)
+    private AccountStatus accountStatus;
+
     private String description;
 
     private boolean emailVerified;
     private LocalDateTime emailVerifiedAt;
 
     @Builder
-    public AccountUpdateDTO(String email, String nickname, String password, AccountType accountType, String description, boolean emailVerified, LocalDateTime emailVerifiedAt) {
+    public AccountUpdateDTO(String email, String nickname, String password, AccountType accountType, String description, boolean emailVerified, LocalDateTime emailVerifiedAt, AccountStatus accountStatus) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
@@ -45,5 +49,6 @@ public class AccountUpdateDTO {
         this.description = description;
         this.emailVerified = emailVerified;
         this.emailVerifiedAt = emailVerifiedAt;
+        this.accountStatus = accountStatus;
     }
 }

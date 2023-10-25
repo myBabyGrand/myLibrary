@@ -37,13 +37,28 @@ public class AccountService {
                 .id(account.getId())
                 .email(account.getEmail())
                 .nickname(account.getNickname())
-                .password(account.getPassword())
+                .password(account.getPassword())//TODO : password 암호화
                 .accountType(account.getAccountType())
                 .description(account.getDescription())
                 .emailVerified(account.isEmailVerified())
                 .joinedAt(account.getJoinedAt())
                 .build();
     }
+
+    public AccountDTO getAccount(Long id) {
+        Account account = accountRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
+        return AccountDTO.builder()
+                .id(account.getId())
+                .email(account.getEmail())
+                .nickname(account.getNickname())
+                .password(account.getPassword())//TODO : password 암호화
+                .accountType(account.getAccountType())
+                .description(account.getDescription())
+                .emailVerified(account.isEmailVerified())
+                .joinedAt(account.getJoinedAt())
+                .build();
+    }
+
 
     public List<AccountResponse> getAccountList(AccountSearch accountSearch) {
 //        Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id"));
