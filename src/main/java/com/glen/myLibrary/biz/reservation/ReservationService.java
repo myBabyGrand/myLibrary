@@ -15,9 +15,7 @@ public class ReservationService {
     }
 
     public List<Reservation> getReservations(Long libraryBookId) {
-//        return reservationRepository.findByLibraryBookAndReservationStatusOrderByRequestedAtDesc();
-        //TODO : 구현
-        return null;
+        return reservationRepository.findByLibraryBookAndReservationStatusOrderByRequestedAtDesc();
     }
 
     public boolean isMyTurn(Long libraryBookId, Long libraryMemberId){
@@ -28,5 +26,15 @@ public class ReservationService {
             }
         }
         return false;
+    }
+
+    public void executeReservation(Long libraryBookId, Long libraryMemberId){
+        List<Reservation> reservations = getReservations(libraryBookId);
+        if(!CollectionUtils.isEmpty(reservations)){
+            if(ReservationStatus.ARRIVAL == reservations.get(0).getReservationStatus()
+               && reservations.get(0).getLibraryMember().getId().equals(libraryMemberId)){
+                reservations.remove(0);
+            }
+        }
     }
 }

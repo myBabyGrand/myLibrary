@@ -66,7 +66,8 @@ public class BorrowService {
 
         Borrow saveBorrow = borrowRepository.save(borrow);
 
-        //TODO : 예약정보 갱신
+        //예약정보 갱신
+        reservationService.executeReservation(borrowCreateDTO.getLibraryBookId(), borrowCreateDTO.getLibraryMemberId());
 
 
         return new SaveResponse(1, saveBorrow.getId());
@@ -78,19 +79,17 @@ public class BorrowService {
         if(!borrow.isPresent()){
             throw new IllegalArgumentException("존재하지 않는 대여건입니다. "+id);
         }
-
         borrow.get().setReturnedAt(LocalDateTime.now());
         Borrow returnedBorrow = borrowRepository.save(borrow.get());
 
+        //도서관 책상태 갱신
         Long libraryBookId = borrow.get().getLibraryBook().getId();
-
         libraryBookService.returnBook(libraryBookId);
 
         //TODO : 예약정보관리 호출 - 예약정보갱신, 다음예약자 알림
         List<Reservation> reservations = reservationService.getReservations(libraryBookId);
         if(!CollectionUtils.isEmpty(reservations)){
             reservationService.reservationArrival(libraryBookId);
-
         }
 
 
