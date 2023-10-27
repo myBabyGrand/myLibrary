@@ -23,15 +23,21 @@ public class Reservation extends BaseEntity {
 
     private LocalDateTime arrivalAt;
 
-    @OneToOne
-    private LibraryMember libraryMember;
+//    @ManyToOne
+//    private LibraryMember libraryMember;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "LIBRARY_BOOK_ID")
+//    private LibraryBook libraryBook;
+//
+//    @OneToOne
+//    private Library library;
 
-    @ManyToOne
-    @JoinColumn(name = "LIBRARY_BOOK_ID")
-    private LibraryBook libraryBook;
+    private String libraryMemberId;
 
-    @OneToOne
-    private Library library;
+    private String libraryBookId;
+
+    private String LibraryId;
 
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;

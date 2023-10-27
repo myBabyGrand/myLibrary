@@ -1,11 +1,13 @@
 package com.glen.myLibrary.biz.library;
 
 import com.glen.myLibrary.biz.account.Account;
+import com.glen.myLibrary.biz.reservation.Reservation;
 import com.glen.myLibrary.common.entity.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -30,5 +32,8 @@ public class LibraryMember extends BaseEntity {
 
     private LocalDateTime joinedAt;
 
+    @OneToMany
+    @JoinColumn(name = "RESERVATION_ID")
+    private List<Reservation> reservations;
 
 }

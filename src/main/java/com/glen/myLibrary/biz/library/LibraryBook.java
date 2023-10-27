@@ -35,5 +35,6 @@ public class LibraryBook extends BaseEntity {
     //TODO : 예약기능 추가시 예약 과 연관관계 항목 추가
 
     @OneToMany
+    @JoinColumn(name = "RESERVATION_ID")
     private List<Reservation> reservation;
 }

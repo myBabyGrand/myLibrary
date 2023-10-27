@@ -1,5 +1,5 @@
 package com.glen.myLibrary.biz.reservation;
 
 public enum ReservationStatus {
-    WAITING, ARRIVAL, CANCEL
+    WAITING, ARRIVAL, DONE, CANCEL
 }

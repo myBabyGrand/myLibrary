@@ -45,16 +45,16 @@ public class BorrowService {
 
         }
 
+        Library library = libraryService.getLibrary(borrowCreateDTO.getLibraryId());
+        //TODO : 도서관 상태 (OPERATING)
+        if(LibraryStatus.OPERATING != library.getLibraryStatus()){
+
+        }
+
         //TODO : 책 상태 (BORROWABLE 이거나, 본인의 RESERVATION)
         if(!libraryBookService.isBorrowAble(borrowCreateDTO.getLibraryBookId(), borrowCreateDTO.getLibraryMemberId())){
 
         }
-
-        //TODO : 도서관 상태 (OPERATING)
-        if(LibraryStatus.OPERATING != libraryService.getLibrary(borrowCreateDTO.getLibraryId()).getLibraryStatus()){
-
-        }
-
 
         int lentDays = 10;//TODO 정책에서 가져오기, 휴관일 고려.
 
@@ -86,14 +86,8 @@ public class BorrowService {
         Long libraryBookId = borrow.get().getLibraryBook().getId();
         libraryBookService.returnBook(libraryBookId);
 
-        //TODO : 예약정보관리 호출 - 예약정보갱신, 다음예약자 알림
-        List<Reservation> reservations = reservationService.getReservations(libraryBookId);
-        if(!CollectionUtils.isEmpty(reservations)){
-            reservationService.reservationArrival(libraryBookId);
-        }
-
-
-
+        //예약정보관리 호출 - 예약정보갱신, 다음예약자 알림
+        reservationService.reservationArrival(libraryBookId);
 
         return new SaveResponse(1, returnedBorrow.getId());
     }
@@ -106,7 +100,8 @@ public class BorrowService {
             throw new IllegalArgumentException("존재하지 않는 대여건입니다. "+id);
         }
 
-        List<Reservation> reservations = reservationService.getReservations(borrow.get().getLibraryBook().getId());;
+        List<Reservation> reservations = reservationService.getReservations(borrow.get().getLibraryBook().getId());
+        //TODO : 예약건이 있다면 연장불가
         if(!CollectionUtils.isEmpty(reservations)){
 
         }
