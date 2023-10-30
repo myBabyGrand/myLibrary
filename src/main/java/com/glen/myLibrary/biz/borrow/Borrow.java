@@ -30,19 +30,23 @@ public class Borrow extends BaseEntity {
 
     private int extendTimes;
 
-    private Long bookId;
+//    private Long bookId;
+//
+//    private Long userId;
 
-    private Long userId;
-
-    @OneToOne
+    @OneToMany
     private LibraryBook libraryBook;
 
-    @OneToOne
+    @OneToMany
     private LibraryMember borrower;
 
-    @OneToOne
+    @ManyToOne
     private Library library;
 
+
+    public void returnBorrow(){
+        this.setReturnedAt(LocalDateTime.now());
+    }
     public void extendBorrow(long days){
         this.setExtendTimes(this.getExtendTimes()+1);
         this.setExpireAt(this.getExpireAt().plusDays(days));
@@ -55,14 +59,14 @@ public class Borrow extends BaseEntity {
     }
 
     @Builder
-    public Borrow(LocalDateTime startAt, LocalDateTime expireAt, LocalDateTime returnedAt, int extendTimes, Long bookId, Long userId, LibraryBook libraryBook, LibraryMember borrower, Library library) {
+    public Borrow(LocalDateTime startAt, LocalDateTime expireAt, LocalDateTime returnedAt, int extendTimes, LibraryBook libraryBook, LibraryMember borrower, Library library) {
 
         this.startAt = startAt;
         this.expireAt = expireAt;
         this.returnedAt = returnedAt;
         this.extendTimes = extendTimes;
-        this.bookId = bookId;
-        this.userId = userId;
+//        this.bookId = bookId;
+//        this.userId = userId;
         this.libraryBook = libraryBook;
         this.borrower = borrower;
         this.library = library;

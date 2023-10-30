@@ -35,13 +35,18 @@ public class BorrowService {
         return new ArrayList<>();
     }
 
+    public int getSumOneBorrower(long libraryMemberId){
+        LibraryMember libraryMember = libraryMemberService.getLibraryMember(libraryMemberId);
+        return borrowRepository.findByBorrowerAndReturnedAtIsNull(libraryMember).size();
+    }
+
     public SaveResponse createBorrow(BorrowCreateDTO borrowCreateDTO) {
         //TODO : 이용자 상태 (APPROVED)
-        LibraryMemberDTO libraryMemberDTO = libraryMemberService.getLibraryMember(borrowCreateDTO.getLibraryMemberId());
-        if(AccountStatus.APPROVED != libraryMemberDTO.getAccount().getAccountStatus()){
+        LibraryMember libraryMember = libraryMemberService.getLibraryMember(borrowCreateDTO.getLibraryMemberId());
+        if(AccountStatus.APPROVED != libraryMember.getAccount().getAccountStatus()){
 
         }
-        if(LibraryMemberStatus.APPROVED != libraryMemberDTO.getLibraryMemberStatus()){
+        if(LibraryMemberStatus.APPROVED != libraryMember.getLibraryMemberStatus()){
 
         }
 
@@ -50,25 +55,28 @@ public class BorrowService {
         if(LibraryStatus.OPERATING != library.getLibraryStatus()){
 
         }
-
+        LibraryBook libraryBook = libraryBookService.getLibraryBook(borrowCreateDTO.getLibraryBookId());
         //TODO : 책 상태 (BORROWABLE 이거나, 본인의 RESERVATION)
-        if(!libraryBookService.isBorrowAble(borrowCreateDTO.getLibraryBookId(), borrowCreateDTO.getLibraryMemberId())){
+        if(!libraryBookService.isBorrowAble(libraryBook, borrowCreateDTO.getLibraryMemberId())){
 
         }
 
-        int lentDays = 10;//TODO 정책에서 가져오기, 휴관일 고려.
+        int lentDays = 10;//TODO 정책에서 가져오기, 휴관일 고려. max대출건수확인
+        int presentBorrowersBorrowCount = getSumOneBorrower(libraryMember.getId());
 
         Borrow borrow = Borrow
                 .builder()
                 .startAt(LocalDateTime.now())
                 .expireAt(DateTimeUtil.endDateTime(LocalDateTime.now().plusDays(lentDays)))
+                .borrower(libraryMember)
+                .libraryBook(libraryBook)
+                .library(library)
                 .build();
 
         Borrow saveBorrow = borrowRepository.save(borrow);
 
         //예약정보 갱신
         reservationService.executeReservation(borrowCreateDTO.getLibraryBookId(), borrowCreateDTO.getLibraryMemberId());
-
 
         return new SaveResponse(1, saveBorrow.getId());
     }
@@ -79,7 +87,7 @@ public class BorrowService {
         if(!borrow.isPresent()){
             throw new IllegalArgumentException("존재하지 않는 대여건입니다. "+id);
         }
-        borrow.get().setReturnedAt(LocalDateTime.now());
+        borrow.get().returnBorrow();
         Borrow returnedBorrow = borrowRepository.save(borrow.get());
 
         //도서관 책상태 갱신

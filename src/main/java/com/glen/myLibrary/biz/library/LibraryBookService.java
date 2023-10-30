@@ -34,14 +34,13 @@ public class LibraryBookService {
         libraryBookRepository.save(libraryBook);
     }
 
-    public boolean isBorrowAble(Long libraryBookId, Long libraryMemberId){
-        LibraryBook libraryBook = this.getLibraryBook(libraryBookId);
+    public boolean isBorrowAble(LibraryBook libraryBook, Long libraryMemberId){
         if(LibraryBookStatus.BORROWABLE == libraryBook.getLibraryBookStatus()){
             return true;
         }
 
         if(LibraryBookStatus.RESERVED == libraryBook.getLibraryBookStatus()){
-            return reservationService.isMyTurn(libraryBookId, libraryMemberId);
+            return reservationService.isMyTurn(libraryBook.getId(), libraryMemberId);
         }
 
         return false;

@@ -37,4 +37,5 @@ public class LibraryBook extends BaseEntity {
     @OneToMany
     @JoinColumn(name = "RESERVATION_ID")
     private List<Reservation> reservation;
+
 }
