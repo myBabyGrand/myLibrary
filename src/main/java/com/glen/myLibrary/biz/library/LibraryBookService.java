@@ -2,12 +2,16 @@ package com.glen.myLibrary.biz.library;
 
 import com.glen.myLibrary.biz.reservation.Reservation;
 import com.glen.myLibrary.biz.reservation.ReservationService;
+import com.glen.myLibrary.common.Exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Optional;
 
+
+@Service
 @RequiredArgsConstructor
 public class LibraryBookService {
 
@@ -17,12 +21,7 @@ public class LibraryBookService {
     private final ReservationService reservationService;
 
     public LibraryBook getLibraryBook(Long libraryBookId){
-        Optional<LibraryBook> libraryBook = libraryBookRepository.findById(libraryBookId);
-
-        if(!libraryBook.isPresent()){
-            throw new IllegalArgumentException("존재하지 않는 책입니다. "+libraryBookId);
-        }
-        return libraryBook.get();
+        return libraryBookRepository.findById(libraryBookId).orElseThrow(DataNotFoundException::new);
     }
     public void returnBook(Long libraryBookId) {
         LibraryBook libraryBook = getLibraryBook(libraryBookId);

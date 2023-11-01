@@ -1,6 +1,6 @@
 package com.glen.myLibrary.biz.library;
 
-import com.glen.myLibrary.biz.library.dto.LibraryMemberDTO;
+import com.glen.myLibrary.common.Exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class LibraryMemberService {
 
     public LibraryMember getLibraryMember(Long libraryMemberId){
         return libraryMemberRepository
-                .findById(libraryMemberId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
+                .findById(libraryMemberId).orElseThrow(DataNotFoundException::new);
     }
 
 }

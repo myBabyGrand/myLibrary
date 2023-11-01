@@ -64,6 +64,7 @@ public class BorrowService {
         int lentDays = 10;//TODO 정책에서 가져오기, 휴관일 고려. max대출건수확인
         int presentBorrowersBorrowCount = getSumOneBorrower(libraryMember.getId());
 
+
         Borrow borrow = Borrow
                 .builder()
                 .startAt(LocalDateTime.now())

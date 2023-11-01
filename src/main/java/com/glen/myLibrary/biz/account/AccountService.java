@@ -2,6 +2,7 @@ package com.glen.myLibrary.biz.account;
 
 import com.glen.myLibrary.biz.account.dto.AccountDTO;
 import com.glen.myLibrary.biz.account.dto.AccountUpdateDTO;
+import com.glen.myLibrary.common.Exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class AccountService {
     }
 
     public AccountResponse get(Long id) {
-        Account account = accountRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
+        Account account = accountRepository.findById(id).orElseThrow(DataNotFoundException::new);
         return AccountResponse.builder()
                 .id(account.getId())
                 .email(account.getEmail())
@@ -46,7 +47,7 @@ public class AccountService {
     }
 
     public AccountDTO getAccount(Long id) {
-        Account account = accountRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
+        Account account = accountRepository.findById(id).orElseThrow(DataNotFoundException::new);
         return AccountDTO.builder()
                 .id(account.getId())
                 .email(account.getEmail())
@@ -72,13 +73,13 @@ public class AccountService {
 
     @Transactional
     public void updateAccount(long id, AccountUpdateDTO updateRequest){
-        Account account = accountRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("존재하지 않는 데이터입니다."));
+        Account account = accountRepository.findById(id).orElseThrow(DataNotFoundException::new);
         account.from(updateRequest);
         accountRepository.save(account);
     }
 
     public void deleteAccount(Long id) {
-        Account account = accountRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("존재하지 않는 데이터입니다."));
+        Account account = accountRepository.findById(id).orElseThrow(DataNotFoundException::new);
         accountRepository.delete(account);
     }
 }
