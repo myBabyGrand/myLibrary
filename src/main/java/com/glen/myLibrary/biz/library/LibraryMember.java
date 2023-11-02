@@ -4,6 +4,7 @@ import com.glen.myLibrary.biz.account.Account;
 import com.glen.myLibrary.biz.reservation.Reservation;
 import com.glen.myLibrary.common.entity.BaseEntity;
 import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import java.util.List;
 
 
 @Entity
-@Data
+@Getter
 public class LibraryMember extends BaseEntity {
 
     @Id

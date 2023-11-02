@@ -17,8 +17,7 @@ public class ReservationService {
         Optional<Reservation> reservation = reservationRepository.findTopByLibraryBookIdAndReservationStatusOrderByRequestedAtDesc(libraryBookId, ReservationStatus.WAITING.name());
         if(reservation.isPresent()){
             Reservation arrivalReservation = reservation.get();
-            arrivalReservation.setArrivalAt(LocalDateTime.now());
-            arrivalReservation.setReservationStatus(ReservationStatus.ARRIVAL);
+            arrivalReservation.setArrival();
             //TODO : NOTIFY to Client(예약도착)
         }
 

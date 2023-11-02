@@ -1,5 +1,6 @@
 package com.glen.myLibrary.common;
 
+import com.glen.myLibrary.common.Exception.DataNotFoundException;
 import com.glen.myLibrary.common.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class ExceptionController {
     @ResponseBody
     public ErrorResponse MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e){
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .code("400")
+                .code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
                 .message("잘못된 요청입니다")
                 .build();
         List<FieldError> fieldErrors = e.getFieldErrors();
@@ -30,6 +31,18 @@ public class ExceptionController {
             String errorMessage = fieldError.getDefaultMessage();
             errorResponse.addValidation(fieldName, errorMessage);
         }
+        return errorResponse;
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(DataNotFoundException.class)
+    public ErrorResponse DataNotFoundExceptionHandler(DataNotFoundException e){
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .code(String.valueOf(HttpStatus.NOT_FOUND.value()))
+                .message("데이터가 존재하지 않습니다.")
+                .build();
+
         return errorResponse;
     }
 }

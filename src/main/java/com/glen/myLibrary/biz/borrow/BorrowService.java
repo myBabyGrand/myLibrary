@@ -4,10 +4,12 @@ import com.glen.myLibrary.biz.account.AccountStatus;
 import com.glen.myLibrary.biz.library.*;
 import com.glen.myLibrary.biz.reservation.Reservation;
 import com.glen.myLibrary.biz.reservation.ReservationService;
+import com.glen.myLibrary.common.Exception.DataNotFoundException;
 import com.glen.myLibrary.common.util.DateTimeUtil;
 import com.glen.myLibrary.common.entity.SaveResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
@@ -28,6 +30,10 @@ public class BorrowService {
 
     private final ReservationService reservationService;
 
+    public List<Borrow> getMyBorrows(Long borrowerId){
+        LibraryMember libraryMember = libraryMemberService.getLibraryMember(borrowerId);
+        return borrowRepository.findByBorrowerAndReturnedAtIsNull(libraryMember);
+    }
 
     public List<BorrowResponse> getBorrows(BorrowPageSearch borrowPageSearch) {
         //TODO : 구현필요
@@ -39,6 +45,7 @@ public class BorrowService {
         return borrowRepository.findByBorrowerAndReturnedAtIsNull(libraryMember).size();
     }
 
+    @Transactional
     public SaveResponse createBorrow(BorrowCreateDTO borrowCreateDTO) {
         //TODO : 이용자 상태 (APPROVED)
         LibraryMember libraryMember = libraryMemberService.getLibraryMember(borrowCreateDTO.getLibraryMemberId());
@@ -81,6 +88,7 @@ public class BorrowService {
         return new SaveResponse(1, saveBorrow.getId());
     }
 
+    @Transactional
     public SaveResponse returnBorrow(Long id) {
 
         Optional<Borrow> borrow = borrowRepository.findById(id);
@@ -100,15 +108,12 @@ public class BorrowService {
         return new SaveResponse(1, returnedBorrow.getId());
     }
 
-
+    @Transactional
     public SaveResponse extendBorrow(Long id) {
 
-        Optional<Borrow> borrow = borrowRepository.findById(id);
-        if(!borrow.isPresent()){
-            throw new IllegalArgumentException("존재하지 않는 대여건입니다. "+id);
-        }
+        Borrow borrow = borrowRepository.findById(id).orElseThrow(DataNotFoundException::new);
 
-        List<Reservation> reservations = reservationService.getReservations(borrow.get().getLibraryBook().getId());
+        List<Reservation> reservations = reservationService.getReservations(borrow.getLibraryBook().getId());
         //TODO : 예약건이 있다면 연장불가
         if(!CollectionUtils.isEmpty(reservations)){
 
@@ -118,8 +123,8 @@ public class BorrowService {
         //TODO : 연장횟수 초과여부
         //TODO : 연장일자 계산 default 일주일(7)
 
-        borrow.get().extendBorrow(7);
-        Borrow extendedBorrow = borrowRepository.save(borrow.get());
+        borrow.extendBorrow(7);
+        Borrow extendedBorrow = borrowRepository.save(borrow);
 
         return new SaveResponse(1, extendedBorrow.getId());
     }

@@ -6,12 +6,14 @@ import com.glen.myLibrary.biz.library.LibraryBookStatus;
 import com.glen.myLibrary.biz.library.LibraryMember;
 import com.glen.myLibrary.common.entity.BaseEntity;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
 public class Reservation extends BaseEntity {
     @Id
     @GeneratedValue
@@ -40,5 +42,11 @@ public class Reservation extends BaseEntity {
     private String LibraryId;
 
     @Enumerated(EnumType.STRING)
+    @Setter
     private ReservationStatus reservationStatus;
+
+    public void setArrival() {
+        this.arrivalAt = LocalDateTime.now();
+        this.reservationStatus = ReservationStatus.ARRIVAL;
+    }
 }

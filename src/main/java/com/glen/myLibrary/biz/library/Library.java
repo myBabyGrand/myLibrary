@@ -10,8 +10,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
 @Entity
+@Getter
 @NoArgsConstructor
 public class Library extends BaseEntity {
 

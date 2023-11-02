@@ -24,8 +24,10 @@ public class BorrowController {
     @GetMapping("/my-borrow")
     public List<BorrowResponse> getMyBorrow (@ModelAttribute BorrowPageSearch borrowPageSearch){
         //TODO : 본인건인지 확인
+        List<BorrowResponse> responses = new ArrayList<>();
+        borrowService.getMyBorrows(1L).stream().forEach(t->responses.add(t.toResponse()));
 
-        return borrowService.getBorrows(borrowPageSearch);
+        return responses;
     }
 
 
