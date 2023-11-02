@@ -1,4 +1,4 @@
-package com.glen.myLibrary.common;
+package com.glen.myLibrary.common.util;
 
 import java.time.LocalDateTime;
 
