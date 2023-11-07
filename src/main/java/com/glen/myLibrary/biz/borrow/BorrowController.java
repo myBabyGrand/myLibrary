@@ -42,6 +42,7 @@ public class BorrowController {
     //대출정보 단건 생성
     @PostMapping("/borrow")
     public SaveResponse createBorrows(@Valid @RequestBody BorrowCreateDTO borrowCreateDTO){
+        borrowCreateDTO.validate();
         return borrowService.createBorrow(borrowCreateDTO);
     }
 

@@ -1,9 +1,12 @@
 package com.glen.myLibrary.common;
 
 import com.glen.myLibrary.common.Exception.DataNotFoundException;
+import com.glen.myLibrary.common.Exception.InvalidRequestException;
+import com.glen.myLibrary.common.Exception.MyLibraryRuntimeException;
 import com.glen.myLibrary.common.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -44,5 +47,22 @@ public class ExceptionController {
                 .build();
 
         return errorResponse;
+    }
+
+    @ResponseBody
+    @ExceptionHandler(MyLibraryRuntimeException.class)
+    public ResponseEntity<ErrorResponse> MyLibraryRuntimeException(MyLibraryRuntimeException e){
+        ErrorResponse body = ErrorResponse
+                .builder()
+                .code(String.valueOf(e.getStatusCode()))
+                .message(e.getMessage())
+                .validation(e.getValidation())
+                .build();
+
+        ResponseEntity<ErrorResponse> responseEntity = ResponseEntity
+                .status(e.getStatusCode())
+                .body(body);
+
+        return responseEntity;
     }
 }

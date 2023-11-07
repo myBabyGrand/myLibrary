@@ -1,5 +1,6 @@
 package com.glen.myLibrary.biz.borrow;
 
+import com.glen.myLibrary.common.Exception.InvalidRequestException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,4 +23,10 @@ public class BorrowCreateDTO {
     private Long libraryId;
 
     private LocalDateTime expiredAt;
+
+    public void validate(){
+        if(expiredAt.isBefore(LocalDateTime.now())){
+            throw new InvalidRequestException("expiredAt","대출만료일자는 오늘보다 빠를 수 없습니다");
+        }
+    }
 }

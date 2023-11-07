@@ -2,12 +2,19 @@ package com.glen.myLibrary.common.Exception;
 
 import lombok.Getter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Getter
-public class MyLibraryRuntimeException extends RuntimeException{
+public abstract class MyLibraryRuntimeException extends RuntimeException{
 
-    private final String messageKey;
+    private String messageKey;
 
-    private final Object[] messageParameter;
+    private Object[] messageParameter;
+
+    private Map<String, String> validation = new HashMap<>();
+
+    public abstract int getStatusCode();
 
     public MyLibraryRuntimeException(String messageKey) {
         this.messageKey = messageKey;
@@ -20,4 +27,20 @@ public class MyLibraryRuntimeException extends RuntimeException{
         this.messageParameter = messageParameter;
     }
 
+    public MyLibraryRuntimeException(String messageKey, Throwable cause){
+        super(messageKey, cause);
+    }
+
+    public MyLibraryRuntimeException(String message, Throwable cause, String messageKey, Object[] messageParameter) {
+        super(message, cause);
+        this.messageKey = messageKey;
+        this.messageParameter = messageParameter;
+    }
+
+    public MyLibraryRuntimeException() {
+    }
+
+    public void addValidation(String fieldName, String errorMessage){
+        validation.put(fieldName, errorMessage);
+    }
 }
