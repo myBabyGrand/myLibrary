@@ -31,7 +31,7 @@ public class ReservationService {
         Optional<Reservation> reservation = reservationRepository.findTopByLibraryBookIdAndReservationStatusOrderByRequestedAtDesc(libraryBookId, ReservationStatus.ARRIVAL.name());
         if(reservation.isPresent()) {
             Reservation arrivalReservation = reservation.get();
-            if(libraryMemberId.equals(arrivalReservation.getLibraryMemberId())){
+            if(libraryMemberId.equals(arrivalReservation.getLibraryMember().getId())){
                 return true;
             }
         }
@@ -42,7 +42,7 @@ public class ReservationService {
         Optional<Reservation> reservation = reservationRepository.findTopByLibraryBookIdAndReservationStatusOrderByRequestedAtDesc(libraryBookId, ReservationStatus.ARRIVAL.name());
         if(reservation.isPresent()) {
             Reservation doneReservation = reservation.get();
-            if(libraryMemberId.equals(doneReservation.getLibraryMemberId())){//필요한가..?
+            if(libraryMemberId.equals(doneReservation.getLibraryMember().getId())){//필요한가..?
                 doneReservation.setReservationStatus(ReservationStatus.DONE);
             }
         }

@@ -33,7 +33,7 @@ public class Library extends BaseEntity {
 
     private LocalDateTime approvedAt;
 
-    @OneToOne
-    private LibraryPolicy libraryPolicy;
+//    @OneToOne
+//    private LibraryPolicy libraryPolicy;
 
 }

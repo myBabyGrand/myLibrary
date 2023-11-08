@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @RequiredArgsConstructor
@@ -27,6 +25,10 @@ public class LibraryPolicy extends BaseEntity {
     private int reservationDueDay = 3;//예약한 도서를 대출할 수 있는 기한
 
     private int maxReservations = 5;//최대예약수
+
+    @OneToOne
+    @JoinColumn(name = "LIBRARY_ID")
+    private Library library;
 
     @Builder
     public LibraryPolicy(int maxBorrowCount, int lentDays, int maxExtendCount, int extendDays, int alarmForReturnDay, int reservationDueDay) {

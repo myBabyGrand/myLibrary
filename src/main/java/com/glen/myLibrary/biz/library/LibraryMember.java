@@ -33,8 +33,8 @@ public class LibraryMember extends BaseEntity {
 
     private LocalDateTime joinedAt;
 
-    @OneToMany
-    @JoinColumn(name = "RESERVATION_ID")
-    private List<Reservation> reservations;
+//    @OneToMany
+//    @JoinColumn(name = "RESERVATION_ID")
+//    private List<Reservation> reservations;
 
 }
