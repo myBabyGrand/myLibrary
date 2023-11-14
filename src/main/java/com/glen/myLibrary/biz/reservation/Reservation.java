@@ -29,18 +29,24 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name = "LIBRARY_MEMBER_ID")
     private LibraryMember libraryMember;
 
+    public void setLibraryMember(LibraryMember libraryMember){
+        this.libraryMember = libraryMember;
+        libraryMember.getReservationList().add(this);
+    }
+
     @ManyToOne
     @JoinColumn(name = "LIBRARY_BOOK_ID")
     private LibraryBook libraryBook;
 
-    @OneToOne
-    private Library library;
+    public void setLibraryBook(LibraryBook libraryBook){
+        this.libraryBook = libraryBook;
+        libraryBook.getReservationList().add(this);
+    }
 
-//    private String libraryMemberId;
-//
-//    private String libraryBookId;
-//
-//    private String LibraryId;
+    @ManyToOne
+    @JoinColumn(name = "LIBRARY_ID")
+    @Setter //단방향
+    private Library library;
 
     @Enumerated(EnumType.STRING)
     @Setter
@@ -50,4 +56,6 @@ public class Reservation extends BaseEntity {
         this.arrivalAt = LocalDateTime.now();
         this.reservationStatus = ReservationStatus.ARRIVAL;
     }
+
+
 }

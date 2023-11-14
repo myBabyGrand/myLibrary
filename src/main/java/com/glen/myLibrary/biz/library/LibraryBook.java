@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,22 +21,22 @@ public class LibraryBook extends BaseEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "LIBRARY_BOOK_ID")
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "LIBRARY_ID")
+    @Setter //단방향
     private Library library;
 
     @Enumerated(EnumType.STRING)
     private LibraryBookStatus libraryBookStatus;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "BOOK_ID")
+    @Setter //단방향
     private Book book;
 
-    //TODO : 예약기능 추가시 예약 과 연관관계 항목 추가
-
-//    @OneToMany
-//    @JoinColumn(name = "RESERVATION_ID")
-//    private List<Reservation> reservation;
+    @OneToMany(mappedBy = "libraryBook")
+    private List<Reservation> reservationList = new ArrayList<>();
 
 }

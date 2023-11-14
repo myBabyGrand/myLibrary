@@ -28,12 +28,9 @@ public class Library extends BaseEntity {
 
     private String description;
 
-    @OneToOne
-    private Address address;
-
     private LocalDateTime approvedAt;
 
-//    @OneToOne
-//    private LibraryPolicy libraryPolicy;
+    @OneToOne(mappedBy = "library")
+    private LibraryPolicy libraryPolicy;
 
 }

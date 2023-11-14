@@ -31,17 +31,23 @@ public class Borrow extends BaseEntity {
 
     private int extendTimes;
 
-//    private Long bookId;
-//
-//    private Long userId;
-
     @ManyToOne
+    @JoinColumn(name = "LIBRARY_BOOK_ID")
     private LibraryBook libraryBook;
 
     @ManyToOne
+    @JoinColumn(name = "LIBRARY_MEMBER_ID")
     private LibraryMember borrower;
 
+    public void setBorrower(LibraryMember libraryMember){
+        this.borrower = libraryMember;
+        if(!borrower.getBorrowList().contains(this)){
+            borrower.getBorrowList().add(this);
+        }
+    }
+
     @ManyToOne
+    @JoinColumn(name = "LIBRARY_ID")
     private Library library;
 
 
@@ -66,8 +72,6 @@ public class Borrow extends BaseEntity {
         this.expireAt = expireAt;
         this.returnedAt = returnedAt;
         this.extendTimes = extendTimes;
-//        this.bookId = bookId;
-//        this.userId = userId;
         this.libraryBook = libraryBook;
         this.borrower = borrower;
         this.library = library;

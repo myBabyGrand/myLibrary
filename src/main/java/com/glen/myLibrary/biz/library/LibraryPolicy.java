@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter
 public class LibraryPolicy extends BaseEntity {
     @Id
-    @Column(name = "LIBRARY_POLICY_ID", nullable = false)
+    @GeneratedValue
     private Long id;
 
     private int maxBorrowCount = 5;//최대대출수
@@ -27,16 +27,18 @@ public class LibraryPolicy extends BaseEntity {
     private int maxReservations = 5;//최대예약수
 
     @OneToOne
-    @JoinColumn(name = "LIBRARY_ID")
+    @JoinColumn(name = "LIBRARY_ID", updatable = false)
     private Library library;
 
     @Builder
-    public LibraryPolicy(int maxBorrowCount, int lentDays, int maxExtendCount, int extendDays, int alarmForReturnDay, int reservationDueDay) {
+    public LibraryPolicy(int maxBorrowCount, int lentDays, int maxExtendCount, int extendDays, int alarmForReturnDay, int reservationDueDay, Library library) {
         this.maxBorrowCount = maxBorrowCount;
         this.lentDays = lentDays;
         this.maxExtendCount = maxExtendCount;
         this.extendDays = extendDays;
         this.alarmForReturnDay = alarmForReturnDay;
         this.reservationDueDay = reservationDueDay;
+        this.library = library;
     }
+
 }
