@@ -39,9 +39,9 @@ public class LibraryMember extends BaseEntity {
 
     public void setAccount(Account account){
         this.account = account;
-        if(!account.getLibraryMemberList().contains(this)){
-            account.getLibraryMemberList().add(this);
-        }
+//        if(!account.getLibraryMemberList().contains(this)){
+//            account.getLibraryMemberList().add(this);
+//        }
     }
 
     private LocalDateTime joinedAt;

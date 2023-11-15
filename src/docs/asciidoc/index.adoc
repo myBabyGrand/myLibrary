@@ -1,0 +1,13 @@
+= MyLibrary API
+:toc:
+
+== my-library-borrow
+
+=== curl
+include::{snippets}/index/curl-request.adoc[]
+
+=== request
+include::{snippets}/index/request-body.adoc[]
+
+=== response
+include::{snippets}/index/response-body.adoc[]

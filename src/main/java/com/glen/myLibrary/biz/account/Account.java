@@ -43,8 +43,8 @@ public class Account extends BaseEntity {
     private LocalDateTime emailVerifiedAt;
 
 
-    @OneToMany(mappedBy = "account")
-    private List<LibraryMember> libraryMemberList = new ArrayList<>();
+//    @OneToMany(mappedBy = "account")
+//    private List<LibraryMember> libraryMemberList = new ArrayList<>();
 
     //귀찮더라도, 생성자method에 Builder를 달아주는게 좋다
     //class에 달 경우 여러가지 제약조건(field가 final이라든지, default 값이 지정되어 있다든지)이 생긴다. 간단한 class가 아닌 경우에는 지양하자.
