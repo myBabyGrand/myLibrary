@@ -463,7 +463,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_curl">curl</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/my-library-borrow' -i -X GET \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'https://api.mylibrary.com/borrow/1' -i -X GET \
     -H 'Accept: application/json'</code></pre>
 </div>
 </div>
@@ -480,7 +480,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_response">response</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>[]</code></pre>
+<pre class="highlight nowrap"><code>{"id":1,"startAt":"2023-11-16T23:35:33.395525","expireAt":"2023-11-23T23:35:33.395585","returnedAt":null,"extendTimes":0,"book":null,"borrower":null,"lender":null}</code></pre>
 </div>
 </div>
 </div>

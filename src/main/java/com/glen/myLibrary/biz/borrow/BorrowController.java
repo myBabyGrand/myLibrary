@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,13 @@ import java.util.Map;
 public class BorrowController {
 
     private final BorrowService borrowService;
+
+    @GetMapping("/borrow/{borrowId}")
+    public BorrowResponse getBorrow(@PathVariable(name = "borrowId") Long id){
+        Borrow borrow = borrowService.getBorrow(id);
+        return borrow != null? borrow.toResponse() : BorrowResponse.builder().id(1L).startAt(LocalDateTime.now()).extendTimes(0).expireAt(LocalDateTime.now().plusDays(7)).build();
+    }
+
 
     //나의 대출 내역 조회 - 세션에서 가져와야함, 빌린날짜 기준 Desc
     @GetMapping("/my-borrow")
@@ -61,7 +69,6 @@ public class BorrowController {
         //TODO : 본인건인지 확인
         return borrowService.extendBorrow(id);
     }
-
 
 
 

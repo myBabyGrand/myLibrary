@@ -77,16 +77,17 @@ public class Borrow extends BaseEntity {
         this.library = library;
     }
 
-    public BorrowResponse toResponse(){
-        return BorrowResponse.builder()
-                .id(this.getId())
-                .borrower(this.getBorrower().getAccount())
-                .book(this.getLibraryBook().getBook())
-                .extendTimes(this.getExtendTimes())
-                .expireAt(this.getExpireAt())
-                .lender(this.getLibrary())
-                .startAt(this.getStartAt())
-                .returnedAt(this.getReturnedAt())
-                .build();
+    public BorrowResponse toResponse() {
+        return BorrowResponse
+                    .builder()
+                    .id(this.getId())
+                    .borrower(this.getBorrower())
+                    .book(this.getLibraryBook())
+                    .extendTimes(this.getExtendTimes())
+                    .expireAt(this.getExpireAt())
+                    .lender(this.getLibrary())
+                    .startAt(this.getStartAt())
+                    .returnedAt(this.getReturnedAt())
+                    .build();
     }
 }

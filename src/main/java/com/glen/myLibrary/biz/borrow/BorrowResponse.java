@@ -1,13 +1,17 @@
 package com.glen.myLibrary.biz.borrow;
 
-import com.glen.myLibrary.biz.account.Account;
-import com.glen.myLibrary.biz.book.Book;
 import com.glen.myLibrary.biz.library.Library;
+import com.glen.myLibrary.biz.library.LibraryBook;
+import com.glen.myLibrary.biz.library.LibraryMember;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.OneToOne;
+
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
+@Getter
 public class BorrowResponse {
 
     private Long id;
@@ -19,8 +23,8 @@ public class BorrowResponse {
     private LocalDateTime returnedAt;
 
     private int extendTimes;
-    private Book book;
-    private Account borrower;
+    private LibraryBook book;
+    private LibraryMember borrower;
     private Library lender;
 
     public void fromEntity(Borrow borrow){
@@ -28,14 +32,14 @@ public class BorrowResponse {
         this.startAt = borrow.getStartAt();
         this.expireAt = borrow.getExpireAt();
         this.returnedAt = borrow.getReturnedAt();
-        this.book = borrow.getLibraryBook().getBook();
-        this.borrower = borrow.getBorrower().getAccount();
+        this.book = borrow.getLibraryBook();
+        this.borrower = borrow.getBorrower();
         this.lender = borrow.getLibrary();
     }
 
 
     @Builder
-    public BorrowResponse(Long id, LocalDateTime startAt, LocalDateTime expireAt, LocalDateTime returnedAt, int extendTimes, Book book, Account borrower, Library lender) {
+    public BorrowResponse(Long id, LocalDateTime startAt, LocalDateTime expireAt, LocalDateTime returnedAt, int extendTimes, LibraryBook book, LibraryMember borrower, Library lender) {
         this.id = id;
         this.startAt = startAt;
         this.expireAt = expireAt;

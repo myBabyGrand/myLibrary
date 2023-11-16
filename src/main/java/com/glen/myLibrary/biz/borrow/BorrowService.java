@@ -128,4 +128,8 @@ public class BorrowService {
 
         return new SaveResponse(1, extendedBorrow.getId());
     }
+
+    public Borrow getBorrow(Long id) {
+        return borrowRepository.findById(id).orElse(null);
+    }
 }

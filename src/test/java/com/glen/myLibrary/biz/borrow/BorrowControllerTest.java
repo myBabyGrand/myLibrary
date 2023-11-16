@@ -61,7 +61,7 @@ class BorrowControllerTest {
     void postError_test() throws Exception {
         mockMvc.perform(post("/postBorrow3")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"libraryMemberId\" : \"1234\", \"libraryBookId\" : \"\"}"))
+                        .content("{\"libraryMemberId\" : \"1234\", \"libraryBookId\" : \"4321\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.libraryId").value("libraryId는 null 일 수 없습니다."))
                 .andDo(print());
@@ -71,7 +71,7 @@ class BorrowControllerTest {
     void postError_test_exceptionHandler() throws Exception {
         mockMvc.perform(post("/postBorrow4")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"libraryMemberId\" : \"1234\", \"libraryBookId\" : \"\"}"))
+                        .content("{\"libraryMemberId\" : \"1234\", \"libraryBookId\" : \"4321\"}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("400"))
                 .andExpect(jsonPath("$.message").value("잘못된 요청입니다"))
