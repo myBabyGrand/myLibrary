@@ -49,4 +49,8 @@ public class BorrowResponse {
         this.borrower = borrower;
         this.lender = lender;
     }
+
+
+
+
 }

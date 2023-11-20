@@ -1,6 +1,6 @@
 package com.glen.myLibrary.biz.borrow;
 
-import org.junit.jupiter.api.BeforeEach;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,25 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
-import java.net.http.HttpRequest;
+import java.time.LocalDateTime;
 
-import static org.springframework.http.MediaType.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -35,6 +30,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class BorrowControllerRestDocTest {
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
 
 //    @BeforeEach
@@ -46,12 +44,58 @@ public class BorrowControllerRestDocTest {
 //    }
 
     @Test
-    @DisplayName("sampleTest")
-    void sample_test () throws Exception{
+    @DisplayName("sampleGetTest")
+    void sample_getTest () throws Exception{
         this.mockMvc.perform(get("/borrow/{borrowId}", 1L).accept(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andDo(document("index"));
+                .andDo(document("borrow-get"
+                        , pathParameters(
+                                parameterWithName("borrowId").description("대출ID")
+                        ),responseFields(
+                                fieldWithPath("id").description("대출ID")
+                                ,fieldWithPath("startAt").description("대출시작일시")
+                                ,fieldWithPath("expireAt").description("대출종료일시")
+                                ,fieldWithPath("returnedAt").description("반납일시")
+                                ,fieldWithPath("extendTimes").description("연장횟수")
+                                ,fieldWithPath("book").description("대출책")
+                                ,fieldWithPath("borrower").description("빌린사람")
+                                ,fieldWithPath("lender").description("빌려준도서관")
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("samplePostTest")
+    void sample_postTest () throws Exception{
+
+
+
+        BorrowCreateDTO borrowCreateDTO = BorrowCreateDTO
+                .builder()
+                .libraryBookId(1L)
+                .libraryMemberId(2L)
+                .libraryId(3L)
+                .expiredAt(LocalDateTime
+                        .now()
+                        .plusDays(7))
+                .build();
+
+        String json = objectMapper.writeValueAsString(borrowCreateDTO);
+
+        this.mockMvc.perform(post("/borrow")
+                        .contentType(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON)
+                        .content(json))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("borrow-post"
+                        , requestFields(
+                                fieldWithPath("libraryId").description("도서관ID")
+                                ,fieldWithPath("libraryMemberId").description("회원ID")
+                                ,fieldWithPath("libraryBookId").description("도서관책ID")
+                        )
+                ));
     }
 
 }

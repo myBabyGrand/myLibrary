@@ -24,16 +24,19 @@ public class BorrowController {
     @GetMapping("/borrow/{borrowId}")
     public BorrowResponse getBorrow(@PathVariable(name = "borrowId") Long id){
         Borrow borrow = borrowService.getBorrow(id);
-        return borrow != null? borrow.toResponse() : BorrowResponse.builder().id(1L).startAt(LocalDateTime.now()).extendTimes(0).expireAt(LocalDateTime.now().plusDays(7)).build();
+        return borrow != null? borrow.toResponse() : testDefaultResponse();
     }
 
+    public BorrowResponse testDefaultResponse(){
+        return BorrowResponse.builder().id(1L).startAt(LocalDateTime.now()).extendTimes(0).expireAt(LocalDateTime.now().plusDays(7)).build();
+    }
 
     //나의 대출 내역 조회 - 세션에서 가져와야함, 빌린날짜 기준 Desc
     @GetMapping("/my-borrow")
     public List<BorrowResponse> getMyBorrow (@ModelAttribute BorrowPageSearch borrowPageSearch){
         //TODO : 본인건인지 확인
         List<BorrowResponse> responses = new ArrayList<>();
-        borrowService.getMyBorrows(1L).stream().forEach(t->responses.add(t.toResponse()));
+        borrowService.getMyBorrows(1L).forEach(t->responses.add(t.toResponse()));
 
         return responses;
     }
@@ -114,5 +117,6 @@ public class BorrowController {
 
         return Map.of();
     }
+
 
 }
