@@ -4,8 +4,9 @@ import com.glen.myLibrary.biz.account.Account;
 import com.glen.myLibrary.biz.borrow.Borrow;
 import com.glen.myLibrary.biz.reservation.Reservation;
 import com.glen.myLibrary.common.entity.BaseEntity;
-import lombok.Data;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class LibraryMember extends BaseEntity {
 
     @Id
@@ -36,6 +38,23 @@ public class LibraryMember extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
+    private LocalDateTime joinedAt;
+    @OneToMany(mappedBy = "borrower")
+    private List<Borrow> borrowList = new ArrayList<>();
+    @OneToMany(mappedBy = "libraryMember")
+    private List<Reservation> reservationList = new ArrayList<>();
+
+    @Builder
+    public LibraryMember(Long id, Library library, LibraryMemberType libraryMemberType, LibraryMemberStatus libraryMemberStatus, Account account, LocalDateTime joinedAt, List<Borrow> borrowList, List<Reservation> reservationList) {
+        this.id = id;
+        this.library = library;
+        this.libraryMemberType = libraryMemberType;
+        this.libraryMemberStatus = libraryMemberStatus;
+        this.account = account;
+        this.joinedAt = joinedAt;
+        this.borrowList = borrowList;
+        this.reservationList = reservationList;
+    }
 
     public void setAccount(Account account){
         this.account = account;
@@ -43,12 +62,4 @@ public class LibraryMember extends BaseEntity {
 //            account.getLibraryMemberList().add(this);
 //        }
     }
-
-    private LocalDateTime joinedAt;
-
-    @OneToMany(mappedBy = "borrower")
-    private List<Borrow> borrowList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "libraryMember")
-    private List<Reservation> reservationList = new ArrayList<>();
 }

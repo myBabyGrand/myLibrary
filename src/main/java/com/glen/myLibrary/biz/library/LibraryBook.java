@@ -3,7 +3,7 @@ package com.glen.myLibrary.biz.library;
 import com.glen.myLibrary.biz.book.Book;
 import com.glen.myLibrary.biz.reservation.Reservation;
 import com.glen.myLibrary.common.entity.BaseEntity;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +16,6 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 public class LibraryBook extends BaseEntity {
 
     @Id
@@ -39,4 +38,12 @@ public class LibraryBook extends BaseEntity {
     @OneToMany(mappedBy = "libraryBook")
     private List<Reservation> reservationList = new ArrayList<>();
 
+    @Builder
+    public LibraryBook(Long id, Library library, LibraryBookStatus libraryBookStatus, Book book, List<Reservation> reservationList) {
+        this.id = id;
+        this.library = library;
+        this.libraryBookStatus = libraryBookStatus;
+        this.book = book;
+        this.reservationList = reservationList;
+    }
 }

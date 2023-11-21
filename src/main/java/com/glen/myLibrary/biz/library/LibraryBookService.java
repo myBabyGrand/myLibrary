@@ -1,14 +1,10 @@
 package com.glen.myLibrary.biz.library;
 
-import com.glen.myLibrary.biz.reservation.Reservation;
+import com.glen.myLibrary.biz.book.Book;
 import com.glen.myLibrary.biz.reservation.ReservationService;
 import com.glen.myLibrary.common.Exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
-import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -19,6 +15,16 @@ public class LibraryBookService {
     private final LibraryBookRepository libraryBookRepository;
 
     private final ReservationService reservationService;
+
+    public LibraryBook makeTestLibraryBook(Book book, Library library){
+        LibraryBook libraryBook = LibraryBook
+                .builder()
+                .book(book)
+                .library(library)
+                .libraryBookStatus(LibraryBookStatus.BORROWABLE)
+                .build();
+        return libraryBookRepository.save(libraryBook);
+    }
 
     public LibraryBook getLibraryBook(Long libraryBookId){
         return libraryBookRepository.findById(libraryBookId).orElseThrow(DataNotFoundException::new);

@@ -1,11 +1,9 @@
 package com.glen.myLibrary.biz.library;
 
-import com.glen.myLibrary.common.entity.Address;
 import com.glen.myLibrary.common.entity.BaseEntity;
-import lombok.Data;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,6 +14,7 @@ import java.time.LocalDateTime;
 public class Library extends BaseEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
@@ -33,4 +32,14 @@ public class Library extends BaseEntity {
     @OneToOne(mappedBy = "library")
     private LibraryPolicy libraryPolicy;
 
+    @Builder
+    public Library(Long id, String name, LibraryStatus libraryStatus, String introduce, String description, LocalDateTime approvedAt, LibraryPolicy libraryPolicy) {
+        this.id = id;
+        this.name = name;
+        this.libraryStatus = libraryStatus;
+        this.introduce = introduce;
+        this.description = description;
+        this.approvedAt = approvedAt;
+        this.libraryPolicy = libraryPolicy;
+    }
 }

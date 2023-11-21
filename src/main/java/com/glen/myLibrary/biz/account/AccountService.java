@@ -19,6 +19,22 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
 
+    public Account makeTestAccount(){
+        Account account = Account
+                .builder()
+                .accountType(AccountType.USER)
+                .accountStatus(AccountStatus.APPROVED)
+                .nickname("계정 닉네임")
+                .description("계정 설명")
+                .password("1234")
+                .email("testAccout@email.com")
+                .joinedAt(LocalDateTime.now())
+                .emailVerified(true)
+                .emailVerifiedAt(LocalDateTime.now())
+                .build();
+        return accountRepository.save(account);
+    }
+
     public void save(AccountDTO accountDTO){
         Account account = Account.builder()
                 .email(accountDTO.getEmail())

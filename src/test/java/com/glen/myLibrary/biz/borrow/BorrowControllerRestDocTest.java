@@ -1,6 +1,11 @@
 package com.glen.myLibrary.biz.borrow;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.glen.myLibrary.biz.account.Account;
+import com.glen.myLibrary.biz.account.AccountService;
+import com.glen.myLibrary.biz.book.Book;
+import com.glen.myLibrary.biz.book.BookService;
+import com.glen.myLibrary.biz.library.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,6 +39,20 @@ public class BorrowControllerRestDocTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private LibraryService libraryService;
+
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    private LibraryBookService libraryBookService;
+
+    @Autowired
+    private AccountService accountService;
+
+    @Autowired
+    private LibraryMemberService libraryMemberService;
 
 //    @BeforeEach
 //    void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
@@ -68,17 +87,18 @@ public class BorrowControllerRestDocTest {
     @Test
     @DisplayName("samplePostTest")
     void sample_postTest () throws Exception{
-
-
+        Library library = libraryService.makeTestLibrary();
+        Book book = bookService.makeTestBook();
+        LibraryBook libraryBook = libraryBookService.makeTestLibraryBook(book, library);
+        Account account = accountService.makeTestAccount();
+        LibraryMember libraryMember = libraryMemberService.makeTestLibraryMember(account, library);
 
         BorrowCreateDTO borrowCreateDTO = BorrowCreateDTO
                 .builder()
-                .libraryBookId(1L)
-                .libraryMemberId(2L)
-                .libraryId(3L)
-                .expiredAt(LocalDateTime
-                        .now()
-                        .plusDays(7))
+                .libraryBookId(libraryBook.getId())
+                .libraryMemberId(libraryMember.getId())
+                .libraryId(library.getId())
+                .expiredAt(LocalDateTime.now().plusDays(7))
                 .build();
 
         String json = objectMapper.writeValueAsString(borrowCreateDTO);
@@ -94,6 +114,7 @@ public class BorrowControllerRestDocTest {
                                 fieldWithPath("libraryId").description("도서관ID")
                                 ,fieldWithPath("libraryMemberId").description("회원ID")
                                 ,fieldWithPath("libraryBookId").description("도서관책ID")
+                                ,fieldWithPath("expiredAt").description("대출종료일시")
                         )
                 ));
     }

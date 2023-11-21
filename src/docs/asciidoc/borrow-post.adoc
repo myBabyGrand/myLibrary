@@ -1,0 +1,19 @@
+= MyLibrary API
+:toc:
+
+== POST borrow
+
+=== curl
+include::{snippets}/borrow-post/curl-request.adoc[]
+
+=== request
+include::{snippets}/borrow-post/request-body.adoc[]
+
+=== request fields
+include::{snippets}/borrow-post/request-fields.adoc[]
+
+=== response
+include::{snippets}/borrow-post/response-body.adoc[]
+
+=== response fields
+//include::{snippets}/borrow-post/response-fields.adoc[]

@@ -1,11 +1,11 @@
 package com.glen.myLibrary.biz.borrow;
 
 import com.glen.myLibrary.common.Exception.InvalidRequestException;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -24,6 +24,14 @@ public class BorrowCreateDTO {
     private Long libraryId;
 
     private LocalDateTime expiredAt;
+
+    @Builder
+    public BorrowCreateDTO(Long libraryBookId, Long libraryMemberId, Long libraryId, LocalDateTime expiredAt) {
+        this.libraryBookId = libraryBookId;
+        this.libraryMemberId = libraryMemberId;
+        this.libraryId = libraryId;
+        this.expiredAt = expiredAt;
+    }
 
     public void validate(){
         if(expiredAt.isBefore(LocalDateTime.now())){

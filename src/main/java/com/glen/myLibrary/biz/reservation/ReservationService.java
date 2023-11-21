@@ -2,9 +2,7 @@ package com.glen.myLibrary.biz.reservation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +12,7 @@ public class ReservationService {
 
     private final ReservationRepository reservationRepository;
     public void reservationArrival(Long libraryBookId) {
-        Optional<Reservation> reservation = reservationRepository.findTopByLibraryBookIdAndReservationStatusOrderByRequestedAtDesc(libraryBookId, ReservationStatus.WAITING.name());
+        Optional<Reservation> reservation = reservationRepository.findTopByLibraryBookIdAndReservationStatusOrderByRequestedAtDesc(libraryBookId, ReservationStatus.WAITING);
         if(reservation.isPresent()){
             Reservation arrivalReservation = reservation.get();
             arrivalReservation.setArrival();
@@ -28,7 +26,7 @@ public class ReservationService {
     }
 
     public boolean isMyTurn(Long libraryBookId, Long libraryMemberId){
-        Optional<Reservation> reservation = reservationRepository.findTopByLibraryBookIdAndReservationStatusOrderByRequestedAtDesc(libraryBookId, ReservationStatus.ARRIVAL.name());
+        Optional<Reservation> reservation = reservationRepository.findTopByLibraryBookIdAndReservationStatusOrderByRequestedAtDesc(libraryBookId, ReservationStatus.ARRIVAL);
         if(reservation.isPresent()) {
             Reservation arrivalReservation = reservation.get();
             if(libraryMemberId.equals(arrivalReservation.getLibraryMember().getId())){
@@ -39,7 +37,7 @@ public class ReservationService {
     }
 
     public void executeReservation(Long libraryBookId, Long libraryMemberId){
-        Optional<Reservation> reservation = reservationRepository.findTopByLibraryBookIdAndReservationStatusOrderByRequestedAtDesc(libraryBookId, ReservationStatus.ARRIVAL.name());
+        Optional<Reservation> reservation = reservationRepository.findTopByLibraryBookIdAndReservationStatusOrderByRequestedAtDesc(libraryBookId, ReservationStatus.ARRIVAL);
         if(reservation.isPresent()) {
             Reservation doneReservation = reservation.get();
             if(libraryMemberId.equals(doneReservation.getLibraryMember().getId())){//필요한가..?

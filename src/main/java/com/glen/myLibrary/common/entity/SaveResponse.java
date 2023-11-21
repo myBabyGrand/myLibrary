@@ -2,9 +2,10 @@ package com.glen.myLibrary.common.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
 @Builder
+@Getter
 @AllArgsConstructor
 public class SaveResponse {
 
