@@ -1,5 +1,9 @@
 = MyLibrary API
-:toc:
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:sectlinks:
 
 == POST borrow
 
@@ -15,5 +19,5 @@ include::{snippets}/borrow-post/request-fields.adoc[]
 === response
 include::{snippets}/borrow-post/response-body.adoc[]
 
-=== response fields
+// === response fields
 //include::{snippets}/borrow-post/response-fields.adoc[]

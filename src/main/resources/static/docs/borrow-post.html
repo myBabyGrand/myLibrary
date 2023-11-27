@@ -435,23 +435,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="article">
+<body class="book toc2 toc-left">
 <div id="header">
 <h1>MyLibrary API</h1>
 <div class="details">
 <span id="revnumber">version 0.0.1-SNAPSHOT</span>
 </div>
-<div id="toc" class="toc">
+<div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_my_library_borrow">my-library-borrow</a>
+<li><a href="#_post_borrow">POST borrow</a>
 <ul class="sectlevel2">
 <li><a href="#_curl">curl</a></li>
 <li><a href="#_request">request</a></li>
-<li><a href="#_request_parameters">request parameters</a></li>
+<li><a href="#_request_fields">request fields</a></li>
 <li><a href="#_response">response</a></li>
-<li><a href="#_response_fields">response fields</a></li>
 </ul>
 </li>
 </ul>
@@ -459,36 +459,84 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_my_library_borrow">my-library-borrow</h2>
+<h2 id="_post_borrow"><a class="link" href="#_post_borrow">POST borrow</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_curl">curl</h3>
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::/Users/glenn/workspace/myLibrary/build/generated-snippets/index/curl-request.adoc[]</p>
+<h3 id="_curl"><a class="link" href="#_curl">curl</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'https://api.mylibrary.com/borrow' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Accept: application/json' \
+    -d '{"libraryBookId":2,"libraryMemberId":3,"libraryId":1,"expiredAt":"2023-12-04T23:25:55.786113"}'</code></pre>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_request">request</h3>
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::/Users/glenn/workspace/myLibrary/build/generated-snippets/index/request-body.adoc[]</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_request_parameters">request parameters</h3>
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::/Users/glenn/workspace/myLibrary/build/generated-snippets/index/path-parameters.adoc[]</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_response">response</h3>
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::/Users/glenn/workspace/myLibrary/build/generated-snippets/index/response-body.adoc[]</p>
+<h3 id="_request"><a class="link" href="#_request">request</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{"libraryBookId":2,"libraryMemberId":3,"libraryId":1,"expiredAt":"2023-12-04T23:25:55.786113"}</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_response_fields">response fields</h3>
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::/Users/glenn/workspace/myLibrary/build/generated-snippets/index/response-fields.adoc[]</p>
+<h3 id="_request_fields"><a class="link" href="#_request_fields">request fields</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+<th class="tableblock halign-left valign-top">Constraints</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libraryId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">required</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">도서관ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libraryMemberId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libraryBookId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">도서관책ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expiredAt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Y</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대출종료일시</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_response"><a class="link" href="#_response">response</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{"processCount":1,"key":4}</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -497,8 +545,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-11-20 22:44:22 +0900
+Last updated 2023-11-27 22:58:27 +0900
 </div>
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

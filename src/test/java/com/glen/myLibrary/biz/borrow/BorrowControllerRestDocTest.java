@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.restdocs.snippet.Attributes;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -65,6 +66,7 @@ public class BorrowControllerRestDocTest {
     @Test
     @DisplayName("sampleGetTest")
     void sample_getTest () throws Exception{
+
         this.mockMvc.perform(get("/borrow/{borrowId}", 1L).accept(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -111,12 +113,12 @@ public class BorrowControllerRestDocTest {
                 .andExpect(status().isOk())
                 .andDo(document("borrow-post"
                         , requestFields(
-                                fieldWithPath("libraryId").description("도서관ID")
+                                fieldWithPath("libraryId").description("도서관ID").attributes(Attributes.key("constraints").value("required"))
                                 ,fieldWithPath("libraryMemberId").description("회원ID")
                                 ,fieldWithPath("libraryBookId").description("도서관책ID")
-                                ,fieldWithPath("expiredAt").description("대출종료일시")
+                                ,fieldWithPath("expiredAt").description("대출종료일시").optional()
                         )
                 ));
     }
-
+//https://backtony.github.io/spring/2021-10-15-spring-test-3/#%EB%AC%B8%EC%84%9C-%EC%BB%A4%EC%8A%A4%ED%85%80%ED%95%98%EA%B8%B0
 }

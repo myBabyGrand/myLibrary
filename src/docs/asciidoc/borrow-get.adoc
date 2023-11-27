@@ -1,0 +1,23 @@
+= MyLibrary API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:sectlinks:
+
+== GET borrow
+
+=== curl
+include::{snippets}/borrow-get/curl-request.adoc[]
+
+=== request
+include::{snippets}/borrow-get/request-body.adoc[]
+
+=== path parameters
+include::{snippets}/borrow-get/path-parameters.adoc[]
+
+=== response
+include::{snippets}/borrow-get/response-body.adoc[]
+
+=== response fields
+include::{snippets}/borrow-get/response-fields.adoc[]
