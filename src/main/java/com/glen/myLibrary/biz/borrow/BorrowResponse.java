@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -27,17 +26,6 @@ public class BorrowResponse {
     private LibraryMember borrower;
     private Library lender;
 
-    public void fromEntity(Borrow borrow){
-        this.id = borrow.getId();
-        this.startAt = borrow.getStartAt();
-        this.expireAt = borrow.getExpireAt();
-        this.returnedAt = borrow.getReturnedAt();
-        this.book = borrow.getLibraryBook();
-        this.borrower = borrow.getBorrower();
-        this.lender = borrow.getLibrary();
-    }
-
-
     @Builder
     public BorrowResponse(Long id, LocalDateTime startAt, LocalDateTime expireAt, LocalDateTime returnedAt, int extendTimes, LibraryBook book, LibraryMember borrower, Library lender) {
         this.id = id;
@@ -48,6 +36,16 @@ public class BorrowResponse {
         this.book = book;
         this.borrower = borrower;
         this.lender = lender;
+    }
+
+    public void fromEntity(Borrow borrow){
+        this.id = borrow.getId();
+        this.startAt = borrow.getStartAt();
+        this.expireAt = borrow.getExpireAt();
+        this.returnedAt = borrow.getReturnedAt();
+        this.book = borrow.getLibraryBook();
+        this.borrower = borrow.getBorrower();
+        this.lender = borrow.getLibrary();
     }
 
 

@@ -37,6 +37,7 @@ public class LibraryMember extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "ACCOUNT_ID")
+    @Setter
     private Account account;
     private LocalDateTime joinedAt;
     @OneToMany(mappedBy = "borrower")
@@ -54,12 +55,5 @@ public class LibraryMember extends BaseEntity {
         this.joinedAt = joinedAt;
         this.borrowList = borrowList;
         this.reservationList = reservationList;
-    }
-
-    public void setAccount(Account account){
-        this.account = account;
-//        if(!account.getLibraryMemberList().contains(this)){
-//            account.getLibraryMemberList().add(this);
-//        }
     }
 }

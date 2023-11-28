@@ -1,11 +1,10 @@
 package com.glen.myLibrary.biz.reservation;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.glen.myLibrary.biz.library.Library;
 import com.glen.myLibrary.biz.library.LibraryBook;
-import com.glen.myLibrary.biz.library.LibraryBookStatus;
 import com.glen.myLibrary.biz.library.LibraryMember;
 import com.glen.myLibrary.common.entity.BaseEntity;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,31 +25,31 @@ public class Reservation extends BaseEntity {
     private LocalDateTime arrivalAt;
 
     @ManyToOne
+    @JsonBackReference //양방향
     @JoinColumn(name = "LIBRARY_MEMBER_ID")
     private LibraryMember libraryMember;
+    @ManyToOne
+    @JsonBackReference //양방향
+    @JoinColumn(name = "LIBRARY_BOOK_ID")
+    private LibraryBook libraryBook;
+
+    @ManyToOne
+    @JoinColumn(name = "LIBRARY_ID")
+    @Setter //단방향
+    private Library library;
+    @Enumerated(EnumType.STRING)
+    @Setter
+    private ReservationStatus reservationStatus;
 
     public void setLibraryMember(LibraryMember libraryMember){
         this.libraryMember = libraryMember;
         libraryMember.getReservationList().add(this);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "LIBRARY_BOOK_ID")
-    private LibraryBook libraryBook;
-
     public void setLibraryBook(LibraryBook libraryBook){
         this.libraryBook = libraryBook;
         libraryBook.getReservationList().add(this);
     }
-
-    @ManyToOne
-    @JoinColumn(name = "LIBRARY_ID")
-    @Setter //단방향
-    private Library library;
-
-    @Enumerated(EnumType.STRING)
-    @Setter
-    private ReservationStatus reservationStatus;
 
     public void setArrival() {
         this.arrivalAt = LocalDateTime.now();

@@ -1,5 +1,8 @@
 package com.glen.myLibrary.biz.borrow;
 
+import com.glen.myLibrary.biz.library.Library;
+import com.glen.myLibrary.biz.library.LibraryBook;
+import com.glen.myLibrary.biz.library.LibraryMember;
 import com.glen.myLibrary.common.entity.SaveResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +31,8 @@ public class BorrowController {
     }
 
     public BorrowResponse testDefaultResponse(){
-        return BorrowResponse.builder().id(1L).startAt(LocalDateTime.now()).extendTimes(0).expireAt(LocalDateTime.now().plusDays(7)).build();
+        return BorrowResponse.builder()
+                .id(1L).startAt(LocalDateTime.now()).extendTimes(0).expireAt(LocalDateTime.now().plusDays(7)).borrower(new LibraryMember()).lender(new Library()).book(new LibraryBook()).build();
     }
 
     //나의 대출 내역 조회 - 세션에서 가져와야함, 빌린날짜 기준 Desc

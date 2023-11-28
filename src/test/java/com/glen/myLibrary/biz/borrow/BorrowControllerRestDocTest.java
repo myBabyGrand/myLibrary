@@ -6,6 +6,7 @@ import com.glen.myLibrary.biz.account.AccountService;
 import com.glen.myLibrary.biz.book.Book;
 import com.glen.myLibrary.biz.book.BookService;
 import com.glen.myLibrary.biz.library.*;
+import com.glen.myLibrary.common.entity.SaveResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -55,33 +56,54 @@ public class BorrowControllerRestDocTest {
     @Autowired
     private LibraryMemberService libraryMemberService;
 
-//    @BeforeEach
-//    void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
-//        this.mockMvc = MockMvcBuilders
-//                .webAppContextSetup(webApplicationContext)
-//                .apply(documentationConfiguration(restDocumentation))
-//                .build();
-//    }
+    @Autowired
+    private BorrowService borrowService;
 
     @Test
     @DisplayName("sampleGetTest")
-    void sample_getTest () throws Exception{
+    void sample_getTest () throws Exception {
+        Library library = libraryService.makeTestLibrary();
+        Book book = bookService.makeTestBook();
+        LibraryBook libraryBook = libraryBookService.makeTestLibraryBook(book, library);
+        Account account = accountService.makeTestAccount();
+        LibraryMember libraryMember = libraryMemberService.makeTestLibraryMember(account, library);
 
-        this.mockMvc.perform(get("/borrow/{borrowId}", 1L).accept(APPLICATION_JSON))
+        BorrowCreateDTO borrowCreateDTO = BorrowCreateDTO
+                .builder()
+                .libraryMemberId(libraryMember.getId())
+                .libraryBookId(libraryBook.getId())
+                .expiredAt(LocalDateTime
+                        .now()
+                        .plusDays(7))
+                .libraryId(library.getId())
+                .build();
+
+        SaveResponse saveResponse = borrowService.createBorrow(borrowCreateDTO);
+
+//        String json = objectMapper.writeValueAsString(borrowCreateDTO);
+//
+//        this.mockMvc.perform(post("/borrow")
+//                        .contentType(APPLICATION_JSON)
+//                        .accept(APPLICATION_JSON)
+//                        .content(json))
+//                .andDo(print());
+
+        this.mockMvc
+                .perform(get("/borrow/{borrowId}", 4L).accept(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("borrow-get"
                         , pathParameters(
                                 parameterWithName("borrowId").description("대출ID")
-                        ),responseFields(
+                        ), responseFields(
                                 fieldWithPath("id").description("대출ID")
-                                ,fieldWithPath("startAt").description("대출시작일시")
-                                ,fieldWithPath("expireAt").description("대출종료일시")
-                                ,fieldWithPath("returnedAt").description("반납일시")
-                                ,fieldWithPath("extendTimes").description("연장횟수")
-                                ,fieldWithPath("book").description("대출책")
-                                ,fieldWithPath("borrower").description("빌린사람")
-                                ,fieldWithPath("lender").description("빌려준도서관")
+                                , fieldWithPath("startAt").description("대출시작일시")
+                                , fieldWithPath("expireAt").description("대출종료일시")
+                                , fieldWithPath("returnedAt").description("반납일시")
+                                , fieldWithPath("extendTimes").description("연장횟수")
+                                , fieldWithPath("book").description("대출책")
+                                , fieldWithPath("borrower").description("빌린사람")
+                                , fieldWithPath("lender").description("빌려준도서관")
                         )
                 ));
     }
