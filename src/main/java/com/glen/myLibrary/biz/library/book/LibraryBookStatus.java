@@ -1,4 +1,4 @@
-package com.glen.myLibrary.biz.library;
+package com.glen.myLibrary.biz.library.book;
 
 public enum LibraryBookStatus {
 

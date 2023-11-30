@@ -1,6 +1,7 @@
-package com.glen.myLibrary.biz.library;
+package com.glen.myLibrary.biz.library.book;
 
 import com.glen.myLibrary.biz.book.Book;
+import com.glen.myLibrary.biz.library.Library;
 import com.glen.myLibrary.biz.reservation.ReservationService;
 import com.glen.myLibrary.common.Exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;

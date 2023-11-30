@@ -1,7 +1,8 @@
-package com.glen.myLibrary.biz.library;
+package com.glen.myLibrary.biz.library.member;
 
 import com.glen.myLibrary.biz.account.Account;
 import com.glen.myLibrary.biz.borrow.Borrow;
+import com.glen.myLibrary.biz.library.Library;
 import com.glen.myLibrary.biz.reservation.Reservation;
 import com.glen.myLibrary.common.entity.BaseEntity;
 import lombok.Builder;

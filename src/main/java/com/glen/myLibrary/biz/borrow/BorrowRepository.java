@@ -1,8 +1,6 @@
 package com.glen.myLibrary.biz.borrow;
 
-import com.glen.myLibrary.biz.account.Account;
-import com.glen.myLibrary.biz.account.AccountRepositoryCustom;
-import com.glen.myLibrary.biz.library.LibraryMember;
+import com.glen.myLibrary.biz.library.member.LibraryMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

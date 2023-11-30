@@ -1,16 +1,12 @@
-package com.glen.myLibrary.biz.library.dto;
+package com.glen.myLibrary.biz.library.member;
 
 import com.glen.myLibrary.biz.account.Account;
 import com.glen.myLibrary.biz.library.Library;
-import com.glen.myLibrary.biz.library.LibraryMemberStatus;
-import com.glen.myLibrary.biz.library.LibraryMemberType;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 
 @Getter

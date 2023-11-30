@@ -1,4 +1,4 @@
-package com.glen.myLibrary.biz.library;
+package com.glen.myLibrary.biz.library.member;
 
 public enum LibraryMemberType {
     OWNER, LIBRARIAN, USER

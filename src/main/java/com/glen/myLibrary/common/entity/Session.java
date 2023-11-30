@@ -2,7 +2,7 @@ package com.glen.myLibrary.common.entity;
 
 import com.glen.myLibrary.biz.account.AccountType;
 import com.glen.myLibrary.biz.library.Library;
-import com.glen.myLibrary.biz.library.LibraryMemberType;
+import com.glen.myLibrary.biz.library.member.LibraryMemberType;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;

@@ -16,7 +16,7 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping("/account/save")
-    public Map<String, String> save(@RequestBody @Valid AccountDTO request){
+    public Map<String, String> createAccount(@RequestBody @Valid AccountDTO request){
         accountService.save(request);
         return Map.of();
     }

@@ -1,8 +1,8 @@
 package com.glen.myLibrary.biz.borrow;
 
 import com.glen.myLibrary.biz.library.Library;
-import com.glen.myLibrary.biz.library.LibraryBook;
-import com.glen.myLibrary.biz.library.LibraryMember;
+import com.glen.myLibrary.biz.library.book.LibraryBook;
+import com.glen.myLibrary.biz.library.member.LibraryMember;
 import com.glen.myLibrary.common.entity.SaveResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

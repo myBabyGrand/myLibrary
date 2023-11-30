@@ -1,6 +1,7 @@
-package com.glen.myLibrary.biz.library;
+package com.glen.myLibrary.biz.library.member;
 
 import com.glen.myLibrary.biz.account.Account;
+import com.glen.myLibrary.biz.library.Library;
 import com.glen.myLibrary.common.Exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

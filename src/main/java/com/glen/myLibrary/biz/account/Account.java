@@ -1,14 +1,11 @@
 package com.glen.myLibrary.biz.account;
 
 import com.glen.myLibrary.biz.account.dto.AccountUpdateDTO;
-import com.glen.myLibrary.biz.library.LibraryMember;
 import com.glen.myLibrary.common.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter

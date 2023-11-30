@@ -2,8 +2,8 @@ package com.glen.myLibrary.biz.reservation;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.glen.myLibrary.biz.library.Library;
-import com.glen.myLibrary.biz.library.LibraryBook;
-import com.glen.myLibrary.biz.library.LibraryMember;
+import com.glen.myLibrary.biz.library.book.LibraryBook;
+import com.glen.myLibrary.biz.library.member.LibraryMember;
 import com.glen.myLibrary.common.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
