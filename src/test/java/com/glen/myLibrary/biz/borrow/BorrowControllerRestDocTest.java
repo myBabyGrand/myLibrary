@@ -73,7 +73,7 @@ public class BorrowControllerRestDocTest {
         Account account = accountService.makeTestAccount();
         LibraryMember libraryMember = libraryMemberService.makeTestLibraryMember(account, library);
 
-        BorrowCreateDTO borrowCreateDTO = BorrowCreateDTO
+        BorrowDTO.BorrowCreateDTO borrowCreateDTO = BorrowDTO.BorrowCreateDTO
                 .builder()
                 .libraryMemberId(libraryMember.getId())
                 .libraryBookId(libraryBook.getId())
@@ -122,7 +122,7 @@ public class BorrowControllerRestDocTest {
         Account account = accountService.makeTestAccount();
         LibraryMember libraryMember = libraryMemberService.makeTestLibraryMember(account, library);
 
-        BorrowCreateDTO borrowCreateDTO = BorrowCreateDTO
+        BorrowDTO.BorrowCreateDTO borrowCreateDTO = BorrowDTO.BorrowCreateDTO
                 .builder()
                 .libraryBookId(libraryBook.getId())
                 .libraryMemberId(libraryMember.getId())

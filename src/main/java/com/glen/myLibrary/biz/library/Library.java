@@ -1,5 +1,6 @@
 package com.glen.myLibrary.biz.library;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.glen.myLibrary.common.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,6 +31,7 @@ public class Library extends BaseEntity {
     private LocalDateTime approvedAt;
 
     @OneToOne(mappedBy = "library")
+    @JsonManagedReference
     private LibraryPolicy libraryPolicy;
 
     @Builder

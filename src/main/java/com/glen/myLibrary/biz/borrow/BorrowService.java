@@ -53,7 +53,7 @@ public class BorrowService {
     }
 
     @Transactional
-    public SaveResponse createBorrow(BorrowCreateDTO borrowCreateDTO) {
+    public SaveResponse createBorrow(BorrowDTO.BorrowCreateDTO borrowCreateDTO) {
         //TODO : 이용자 상태 (APPROVED)
         LibraryMember libraryMember = libraryMemberService.getLibraryMember(borrowCreateDTO.getLibraryMemberId());
         if(AccountStatus.APPROVED != libraryMember.getAccount().getAccountStatus()){

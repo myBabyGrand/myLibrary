@@ -1,5 +1,6 @@
 package com.glen.myLibrary.biz.library.member;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.glen.myLibrary.biz.account.Account;
 import com.glen.myLibrary.biz.borrow.Borrow;
 import com.glen.myLibrary.biz.library.Library;
@@ -42,8 +43,10 @@ public class LibraryMember extends BaseEntity {
     private Account account;
     private LocalDateTime joinedAt;
     @OneToMany(mappedBy = "borrower")
+    @JsonManagedReference
     private List<Borrow> borrowList = new ArrayList<>();
     @OneToMany(mappedBy = "libraryMember")
+    @JsonManagedReference
     private List<Reservation> reservationList = new ArrayList<>();
 
     @Builder

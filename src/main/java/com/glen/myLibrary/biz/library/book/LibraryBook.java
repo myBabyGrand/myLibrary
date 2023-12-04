@@ -1,5 +1,6 @@
 package com.glen.myLibrary.biz.library.book;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.glen.myLibrary.biz.book.Book;
 import com.glen.myLibrary.biz.library.Library;
 import com.glen.myLibrary.biz.reservation.Reservation;
@@ -37,6 +38,7 @@ public class LibraryBook extends BaseEntity {
     private Book book;
 
     @OneToMany(mappedBy = "libraryBook")
+    @JsonManagedReference
     private List<Reservation> reservationList = new ArrayList<>();
 
     @Builder

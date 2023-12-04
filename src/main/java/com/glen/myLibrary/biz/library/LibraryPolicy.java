@@ -1,5 +1,6 @@
 package com.glen.myLibrary.biz.library;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.glen.myLibrary.common.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class LibraryPolicy extends BaseEntity {
 
     @OneToOne
     @JoinColumn(name = "LIBRARY_ID", updatable = false)
+    @JsonBackReference
     private Library library;
 
     @Builder

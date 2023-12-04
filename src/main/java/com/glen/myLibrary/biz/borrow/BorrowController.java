@@ -56,7 +56,7 @@ public class BorrowController {
 
     //대출정보 단건 생성
     @PostMapping("/borrow")
-    public SaveResponse createBorrows(@Valid @RequestBody BorrowCreateDTO borrowCreateDTO){
+    public SaveResponse createBorrows(@Valid @RequestBody BorrowDTO.BorrowCreateDTO borrowCreateDTO){
         borrowCreateDTO.validate();
         return borrowService.createBorrow(borrowCreateDTO);
     }
@@ -97,7 +97,7 @@ public class BorrowController {
     }
 
     @PostMapping("/postBorrow3")
-    public Map<String, String> borrow3(@Valid @RequestBody BorrowCreateDTO borrowCreateDTO, BindingResult result){
+    public Map<String, String> borrow3(@Valid @RequestBody BorrowDTO.BorrowCreateDTO borrowCreateDTO, BindingResult result){
         if(result.hasErrors()){
             List<FieldError> fieldErrors = result.getFieldErrors();
             FieldError firstFieldError = fieldErrors.get(0);
@@ -115,7 +115,7 @@ public class BorrowController {
     }
 
     @PostMapping("/postBorrow4")
-    public Map<String, String> borrow4(@Valid @RequestBody BorrowCreateDTO borrowCreateDTO){
+    public Map<String, String> borrow4(@Valid @RequestBody BorrowDTO.BorrowCreateDTO borrowCreateDTO){
         log.info("borrowCreateDTO : {}", borrowCreateDTO);
 
 

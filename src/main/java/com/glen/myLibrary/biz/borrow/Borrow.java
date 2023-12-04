@@ -31,7 +31,7 @@ public class Borrow extends BaseEntity {
     private int extendTimes;
 
     @ManyToOne
-    @JsonBackReference //양방향 연관관계 일때 순환참조 방지, 또는 mapped by 부분에 @JsonManagedReference 를 달아줘서 순서를 정해준다.
+    @JsonBackReference //양방향 연관관계 일때 순환참조 방지, 또는 mapped by 부분에 @JsonManagedReference 를 달아줘서 순서를 정해준다. (또는 둘다)
     @JoinColumn(name = "LIBRARY_BOOK_ID")
     private LibraryBook libraryBook;
 
