@@ -54,5 +54,4 @@ public class Book extends BaseEntity {
         this.isbn13 = isbn13;
         this.publishedAt = publishedAt;
     }
-
 }
