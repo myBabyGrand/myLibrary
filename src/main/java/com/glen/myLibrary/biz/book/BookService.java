@@ -1,5 +1,7 @@
 package com.glen.myLibrary.biz.book;
 
+import com.glen.myLibrary.common.Exception.DataNotFoundException;
+import com.glen.myLibrary.common.Exception.MyLibraryBizException;
 import com.glen.myLibrary.common.entity.SaveResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,7 +34,7 @@ public class BookService {
     public SaveResponse createBook(BookDTO.BookCreateDTO bookCreateDTO){
         //TODO isbn13이나 isbn10으로 조회해서 있는 건이면 이미 등록된 데이터
         if(isExistWithIsbn(bookCreateDTO.getIsbn10(), bookCreateDTO.getIsbn13())){
-           throw new RuntimeException("이미존재하는 데이터 입니다");
+           throw new MyLibraryBizException("이미존재하는 데이터 입니다");
         }
 
         Book book = bookRepository.save(bookCreateDTO.toEntity());
@@ -50,5 +52,28 @@ public class BookService {
             return true;
         }
         return false;
+    }
+
+    public SaveResponse updateBook(BookDTO.BookUpdateDTO bookUpdateDTO) {
+        Book book = bookRepository
+                .findById(bookUpdateDTO.getBookId())
+                .orElseThrow(DataNotFoundException::new);
+        book.from(bookUpdateDTO);
+        bookRepository.save(book);
+
+        return SaveResponse.builder()
+                .key(book.getId())
+                .processCount(1).build();
+    }
+
+    public SaveResponse deleteBook(Long bookId) {
+        Book book = bookRepository
+                .findById(bookId)
+                .orElseThrow(DataNotFoundException::new);
+        bookRepository.deleteById(bookId);
+        return SaveResponse.builder()
+                .key(book.getId())
+                .processCount(1).build();
+
     }
 }

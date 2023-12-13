@@ -2,9 +2,7 @@ package com.glen.myLibrary.biz.book;
 
 import com.glen.myLibrary.common.entity.SaveResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -24,6 +22,14 @@ public class BookController {
         return bookService.createBook(bookCreateDTO);
     }
     //update
+    @PatchMapping("/book/{bookId}")
+    public SaveResponse updateBook(@PathVariable Long bookId, @RequestBody @Valid BookDTO.BookUpdateDTO bookUpdateDTO){
+        return bookService.updateBook(bookUpdateDTO);
+    }
 
     //delete
+    @DeleteMapping("book/{bookId}")
+    public SaveResponse deleteBook(@PathVariable Long bookId){
+        return bookService.deleteBook(bookId);
+    }
 }

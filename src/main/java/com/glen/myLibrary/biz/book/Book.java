@@ -54,4 +54,11 @@ public class Book extends BaseEntity {
         this.isbn13 = isbn13;
         this.publishedAt = publishedAt;
     }
+
+    public void from (BookDTO.BookUpdateDTO bookUpdateDTO){
+        this.id = bookUpdateDTO.getBookId();
+        this.description = bookUpdateDTO.getDescription() != null ? bookUpdateDTO.getDescription() : this.description;
+        this.imageUrl = bookUpdateDTO.getImageUrl() != null ? bookUpdateDTO.getImageUrl() : this.imageUrl;
+        this.originUrl = bookUpdateDTO.getOriginUrl() != null ? bookUpdateDTO.getOriginUrl() : this.originUrl;
+    }
 }

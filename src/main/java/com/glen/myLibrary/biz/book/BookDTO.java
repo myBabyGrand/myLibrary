@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Getter
@@ -61,6 +62,25 @@ public class BookDTO {
                     .isbn10(this.isbn10)
                     .description(this.description)
                     .build();
+        }
+    }
+
+    @Getter
+    @Setter
+    public class BookUpdateDTO{
+
+        @NotBlank
+        private Long bookId;
+        private String description;
+        private String imageUrl;
+        private String originUrl;
+
+        @Builder
+        public BookUpdateDTO(Long bookId, String description, String imageUrl, String originUrl) {
+            this.bookId = bookId;
+            this.description = description;
+            this.imageUrl = imageUrl;
+            this.originUrl = originUrl;
         }
     }
 
