@@ -26,7 +26,7 @@ public class BookService {
                 .originUrl("http://출처주소")
                 .publisher("출판사")
                 .publishedAt(LocalDateTime.now())
-                .subject(Subject.NOVEL)
+                .category(Category.NOVEL)
                 .build();
         return bookRepository.save(book);
     }

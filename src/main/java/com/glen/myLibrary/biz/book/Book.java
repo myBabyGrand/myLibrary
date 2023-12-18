@@ -28,7 +28,7 @@ public class Book extends BaseEntity {
     private String publisher;
 
     @Enumerated(EnumType.STRING)
-    private Subject subject;
+    private Category category;
 
     private String imageUrl;
 
@@ -41,13 +41,13 @@ public class Book extends BaseEntity {
     private LocalDateTime publishedAt;
 
     @Builder
-    public Book(Long id, String title, String author, String description, String publisher, Subject subject, String imageUrl, String originUrl, String isbn10, String isbn13, LocalDateTime publishedAt) {
+    public Book(Long id, String title, String author, String description, String publisher, Category category, String imageUrl, String originUrl, String isbn10, String isbn13, LocalDateTime publishedAt) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.description = description;
         this.publisher = publisher;
-        this.subject = subject;
+        this.category = category;
         this.imageUrl = imageUrl;
         this.originUrl = originUrl;
         this.isbn10 = isbn10;
