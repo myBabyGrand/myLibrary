@@ -1,8 +1,7 @@
 package com.glen.myLibrary.common;
 
-import com.glen.myLibrary.common.Exception.DataNotFoundException;
-import com.glen.myLibrary.common.Exception.InvalidRequestException;
-import com.glen.myLibrary.common.Exception.MyLibraryRuntimeException;
+import com.glen.myLibrary.common.exception.DataNotFoundException;
+import com.glen.myLibrary.common.exception.MyLibraryRuntimeException;
 import com.glen.myLibrary.common.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

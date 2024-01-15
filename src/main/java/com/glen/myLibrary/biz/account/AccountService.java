@@ -2,7 +2,7 @@ package com.glen.myLibrary.biz.account;
 
 import com.glen.myLibrary.biz.account.dto.AccountDTO;
 import com.glen.myLibrary.biz.account.dto.AccountUpdateDTO;
-import com.glen.myLibrary.common.Exception.DataNotFoundException;
+import com.glen.myLibrary.common.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

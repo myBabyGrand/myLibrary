@@ -1,4 +1,4 @@
-package com.glen.myLibrary.common.Exception;
+package com.glen.myLibrary.common.exception;
 
 import lombok.Getter;
 
@@ -13,8 +13,6 @@ public abstract class MyLibraryRuntimeException extends RuntimeException{
     private Object[] messageParameter;
 
     private Map<String, String> validation = new HashMap<>();
-
-    public abstract int getStatusCode();
 
     public MyLibraryRuntimeException(String messageKey) {
         this.messageKey = messageKey;
@@ -39,6 +37,8 @@ public abstract class MyLibraryRuntimeException extends RuntimeException{
 
     public MyLibraryRuntimeException() {
     }
+
+    public abstract int getStatusCode();
 
     public void addValidation(String fieldName, String errorMessage){
         validation.put(fieldName, errorMessage);

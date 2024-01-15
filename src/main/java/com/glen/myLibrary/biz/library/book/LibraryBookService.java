@@ -3,7 +3,7 @@ package com.glen.myLibrary.biz.library.book;
 import com.glen.myLibrary.biz.book.Book;
 import com.glen.myLibrary.biz.library.Library;
 import com.glen.myLibrary.biz.reservation.ReservationService;
-import com.glen.myLibrary.common.Exception.DataNotFoundException;
+import com.glen.myLibrary.common.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

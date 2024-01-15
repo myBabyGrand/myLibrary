@@ -1,4 +1,4 @@
-package com.glen.myLibrary.common.Exception;
+package com.glen.myLibrary.common.exception;
 
 import lombok.Getter;
 

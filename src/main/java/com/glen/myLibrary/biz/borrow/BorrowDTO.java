@@ -1,6 +1,6 @@
 package com.glen.myLibrary.biz.borrow;
 
-import com.glen.myLibrary.common.Exception.InvalidRequestException;
+import com.glen.myLibrary.common.exception.InvalidRequestException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
